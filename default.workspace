@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="Workspace">
+		<Project filename="gl-unreal-world/Unreal World.cbp">
+			<Depends filename="gl-unreal-world/src/modules/gfx/gfx.cbp" />
+			<Depends filename="gl-unreal-world/src/modules/ecs/ecs.cbp" />
+		</Project>
+		<Project filename="gl-unreal-world/src/modules/gfx/gfx.cbp" />
+		<Project filename="gl-unreal-world/src/modules/ecs/ecs.cbp">
+			<Depends filename="gl-unreal-world/src/modules/gfx/gfx.cbp" />
+		</Project>
+	</Workspace>
+</CodeBlocks_workspace_file>

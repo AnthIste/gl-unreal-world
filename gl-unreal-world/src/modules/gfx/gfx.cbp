@@ -14,7 +14,11 @@
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
+					<Add option="-Weffc++" />
+					<Add option="-Wmain" />
 					<Add option="-g" />
+					<Add option="-fPIC" />
+					<Add directory="/home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/gfx/include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -36,7 +40,10 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="include/shader_utils.h" />
+		<Unit filename="resources/shaders/basic.frag" />
+		<Unit filename="resources/shaders/basic.vert" />
+		<Unit filename="shader_utils.cc" />
 		<Extensions>
 			<envvars />
 			<code_completion />
