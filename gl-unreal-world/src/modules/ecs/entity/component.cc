@@ -1,4 +1,4 @@
-#include "component.h"
+#include "entity/component.h"
 
 namespace entity {
 

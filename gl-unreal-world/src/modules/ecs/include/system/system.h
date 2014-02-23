@@ -4,7 +4,8 @@
 namespace system {
 
 class System {
-
+public:
+    virtual ~System() {}
 };
 
 };

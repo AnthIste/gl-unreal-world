@@ -6,6 +6,8 @@ namespace entity {
 struct Component {
     unsigned int id;
     unsigned int type;
+
+    virtual ~Component() {}
 };
 
 };

@@ -1,9 +1,9 @@
 #ifndef INC_ENTITY_ENTITY_H
 #define INC_ENTITY_ENTITY_H
 
-namespace entity {
-
 #include <vector>
+
+namespace entity {
 
 struct Entity {
     unsigned int id;

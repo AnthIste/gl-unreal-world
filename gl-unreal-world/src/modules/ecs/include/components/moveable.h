@@ -5,6 +5,8 @@ namespace components {
 
 #include "entity/component.h"
 
+using entity::Component;
+
 struct Moveable : public Component {
     double x;
     double y;

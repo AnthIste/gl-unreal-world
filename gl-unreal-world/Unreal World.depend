@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1393163493 source:/home/salad/Code/OpenGL/ecs/gl-unreal-world/src/main.cc
+	<GLFW/glfw3.h>
+	<iostream>
+	<cstdlib>
+
