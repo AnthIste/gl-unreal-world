@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Run in sub-shell
+(cd build; ./main)
