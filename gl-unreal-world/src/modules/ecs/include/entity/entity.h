@@ -3,7 +3,7 @@
 
 #include <vector>
 
-namespace entity {
+namespace ecsentity {
 
 struct Entity {
     unsigned int id;

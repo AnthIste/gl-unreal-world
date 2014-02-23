@@ -1,7 +1,7 @@
 #ifndef INC_ENTITY_COMPONENT_H
 #define INC_ENTITY_COMPONENT_H
 
-namespace entity {
+namespace ecsentity {
 
 struct Component {
     unsigned int id;

@@ -2,17 +2,28 @@
 #define INC_ENTITY_ENTITY_MANAGER_H
 
 #include "entity/entity_subscriber.h"
+#include "entity/entity.h"
 
+#include <memory>
 #include <set>
 #include <map>
 
-namespace entity {
+namespace ecsentity {
 
 class EntityManager {
 public:
     EntityManager();
 
     virtual ~EntityManager();
+
+    // Makes an entity known to the system
+    void registerEntity(std::shared_ptr<ecsentity::Entity> entity);
+
+    // Makes an entity unknown to the system
+    void deregisterEntity(std::shared_ptr<ecsentity::Entity> entity);
+
+    // Notifies all subscribers about changes to known entities
+    void publishChanges();
 
     // The subscriber will be notified if an entity is created or destroyed
     // by the EntityManager.
@@ -28,9 +39,15 @@ public:
     // to the subscriber are guaranteed to be removed.
     void unsubscribe(EntitySubscriber* subscriber);
 
-    void foo();
-
 private:
+    // Buffer of registered entities
+    std::set<std::shared_ptr<ecsentity::Entity> > _entitiesToAdd;
+
+    // Buffer of deregistered entities
+    std::set<std::shared_ptr<ecsentity::Entity> > _entitiesToRemove;
+
+    std::map<unsigned int, std::shared_ptr<ecsentity::Entity> > _entities;
+
     std::set<EntitySubscriber*> _entitySubscribers;
 
     std::map<unsigned int, std::set<EntitySubscriber*> > _componentSubscribers;

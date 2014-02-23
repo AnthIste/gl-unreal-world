@@ -1,9 +1,9 @@
 #include "system/system.h"
 #include "entity/entity_manager.h"
 
-namespace system {
+namespace ecssystem {
 
-using entity::EntityManager;
+using ecsentity::EntityManager;
 
 System::~System()
 {
@@ -19,7 +19,7 @@ void System::finalize()
     entityManager()->unsubscribe(this);
 }
 
-void System::entitiesAdded(std::vector<entity::Entity> entities)
+void System::entitiesAdded(std::vector<ecsentity::Entity> entities)
 {
 }
 

@@ -1,5 +1,5 @@
 #include "entity/component.h"
 
-namespace entity {
+namespace ecsentity {
 
 };

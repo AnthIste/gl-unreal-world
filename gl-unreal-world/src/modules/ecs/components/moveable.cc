@@ -1,5 +1,5 @@
 #include "components/moveable.h"
 
-namespace components {
+namespace ecscomponents {
 
 };

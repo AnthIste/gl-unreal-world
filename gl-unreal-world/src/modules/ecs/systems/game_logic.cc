@@ -1,15 +1,15 @@
 #include "systems/game_logic.h"
 
-namespace systems {
+namespace ecssystems {
 
 using std::shared_ptr;
-using entity::EntitySubscriber;
+using ecsentity::EntitySubscriber;
 
 void GameLogicSystem::initialize()
 {
 }
 
-void GameLogicSystem::entitiesAdded(std::vector<entity::Entity> entities)
+void GameLogicSystem::entitiesAdded(std::vector<ecsentity::Entity> entities)
 {
     // Filter by component types and add to local storage
 }

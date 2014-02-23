@@ -6,11 +6,11 @@
 
 #include <memory>
 
-namespace system {
+namespace ecssystem {
 
-class System : public entity::EntitySubscriber {
+class System : public ecsentity::EntitySubscriber {
 public:
-    System(std::shared_ptr<entity::EntityManager> entityManager)
+    System(std::shared_ptr<ecsentity::EntityManager> entityManager)
         : _entityManager(entityManager) { }
 
     virtual ~System();
@@ -19,13 +19,13 @@ public:
 
     virtual void finalize();
 
-    virtual void entitiesAdded(std::vector<entity::Entity> entities);
+    virtual void entitiesAdded(std::vector<ecsentity::Entity> entities);
 
 protected:
-    virtual std::shared_ptr<entity::EntityManager> entityManager() { return _entityManager; }
+    virtual std::shared_ptr<ecsentity::EntityManager> entityManager() { return _entityManager; }
 
 private:
-    std::shared_ptr<entity::EntityManager> _entityManager;
+    std::shared_ptr<ecsentity::EntityManager> _entityManager;
 };
 
 };

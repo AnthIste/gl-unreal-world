@@ -3,11 +3,9 @@
 
 #include "entity/component.h"
 
-namespace components {
+namespace ecscomponents {
 
-using entity::Component;
-
-struct Moveable : public Component {
+struct Moveable : public ecsentity::Component {
     double x;
     double y;
     double z;

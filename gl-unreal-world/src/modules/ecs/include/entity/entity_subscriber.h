@@ -5,12 +5,12 @@
 
 #include <vector>
 
-namespace entity {
+namespace ecsentity {
 
 class EntitySubscriber {
 public:
     virtual ~EntitySubscriber() { }
-    virtual void entitiesAdded(std::vector<entity::Entity> entities) = 0;
+    virtual void entitiesAdded(std::vector<ecsentity::Entity> entities) = 0;
 };
 
 };
