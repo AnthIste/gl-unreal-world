@@ -1,2 +1,7 @@
 -Imodules/ecs/include
+-Imodules/ecs/include/entity
+-Imodules/ecs/include/components
+-Imodules/ecs/include/system
+-Imodules/ecs/include/systems
+-Imodules/gfx/include
 -Imodules/uwl/include

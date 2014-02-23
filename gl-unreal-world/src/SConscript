@@ -1,5 +1,12 @@
 Import('env')
 
-env.Append(CPPPATH=['modules/ecs/include', 'modules/uwl/include'])
+env.Append(CPPPATH=[
+    'modules/ecs/include',
+    'modules/ecs/include/entity',
+    'modules/ecs/include/components',
+    'modules/ecs/include/system',
+    'modules/ecs/include/systems',
+    'modules/gfx/include',
+    'modules/uwl/include'])
 
 env.Program('main', Glob('*.cc') + Glob('modules/ecs/*.cc') + Glob('modules/uwl/*.cc'), LIBS=['glfw', 'GL', 'GLU', 'X11', 'Xxf86vm', 'Xrandr', 'pthread', 'Xi'])
