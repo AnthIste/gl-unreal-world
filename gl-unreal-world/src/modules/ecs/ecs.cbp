@@ -14,7 +14,6 @@
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
-					<Add option="-Weffc++" />
 					<Add option="-Wmain" />
 					<Add option="-std=c++0x" />
 					<Add option="-g" />
@@ -49,6 +48,7 @@
 		<Unit filename="include/entity/component.h" />
 		<Unit filename="include/entity/entity.h" />
 		<Unit filename="include/entity/entity_manager.h" />
+		<Unit filename="include/entity/entity_subscriber.h" />
 		<Unit filename="include/system/system.h" />
 		<Unit filename="include/systems/game_logic.h" />
 		<Unit filename="system/system.cc" />

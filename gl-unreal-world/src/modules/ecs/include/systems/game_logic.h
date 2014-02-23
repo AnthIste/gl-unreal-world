@@ -5,10 +5,16 @@
 
 namespace systems {
 
-using system::System;
+class GameLogicSystem : public system::System {
+public:
+    GameLogicSystem(std::shared_ptr<entity::EntityManager> entityManager)
+        : system::System(entityManager) { }
 
-class GameLogicSystem : public System {
+    virtual ~GameLogicSystem() { }
 
+    virtual void initialize();
+
+    virtual void entitiesAdded(std::vector<entity::Entity> entities);
 };
 
 };

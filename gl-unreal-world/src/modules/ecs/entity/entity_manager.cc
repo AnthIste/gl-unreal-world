@@ -1,5 +1,10 @@
 #include "entity/entity_manager.h"
 
+#include <algorithm>
+
+using std::set;
+using std::map;
+
 namespace entity {
 
 EntityManager::EntityManager()
@@ -10,12 +15,18 @@ EntityManager::~EntityManager()
 {
 }
 
-void EntityManager::subscribeEntityChanges(std::shared_ptr<EntitySubscriber> subscriber)
+void EntityManager::subscribeEntityChanges(EntitySubscriber* subscriber)
 {
+    _entitySubscribers.insert(subscriber);
 }
 
-void EntityManager::subscribeComponentChanges(std::shared_ptr<EntitySubscriber> subscriber, std::vector<unsigned int> componentTypes)
+void EntityManager::subscribeComponentChanges(EntitySubscriber* subscriber, set<unsigned int> componentTypes)
 {
+    for (auto componentType : componentTypes) {
+        auto subscriberList = _componentSubscribers[componentType];
+
+        subscriberList.insert(subscriber);
+    }
 }
 
 };

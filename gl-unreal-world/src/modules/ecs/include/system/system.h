@@ -12,9 +12,15 @@ class System : public entity::EntitySubscriber {
 public:
     System(std::shared_ptr<entity::EntityManager> entityManager)
         : _entityManager(entityManager) { }
+
     virtual ~System();
 
+    virtual void initialize() = 0;
+
     virtual void entitiesAdded(std::vector<entity::Entity> entities);
+
+protected:
+    virtual std::shared_ptr<entity::EntityManager> entityManager() { return _entityManager; }
 
 private:
     std::shared_ptr<entity::EntityManager> _entityManager;
