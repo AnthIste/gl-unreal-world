@@ -15,6 +15,7 @@
 #include "entity/entity.h"
 #include "entity/entity_manager.h"
 #include "systems/game_logic.h"
+#include "components/moveable.h"
 
 #ifndef __GLFW_INCLUDED__
 #define __GLFW_INCLUDED__
@@ -30,6 +31,7 @@
 using ecsentity::Entity;
 using ecsentity::EntityManager;
 using ecssystems::GameLogicSystem;
+using ecscomponents::Moveable;
 
 const char* WindowTitle = "The Unreal World";
 const int WindowWidth = 640;
@@ -70,15 +72,18 @@ int main()
     // Initialize OpenGL
     init_opengl(window);
 
-    // Initialize game engine
+    // Initialize game engine and systems
     auto entityManager = std::make_shared<EntityManager>();
     auto gameLogicSystem = std::make_shared<GameLogicSystem>(entityManager);
+
+    gameLogicSystem->initialize();
 
     // Initialize entities
     auto shipEntity = std::make_shared<Entity>();
 
-    // Initialize systems
     entityManager->registerEntity(shipEntity);
+    entityManager->addComponent(shipEntity, std::make_shared<Moveable>());
+
     entityManager->publishChanges();
 
     // Enter main window loop
@@ -86,9 +91,15 @@ int main()
     {
         render_scene();
 
+        // Update game engine
+        entityManager->publishChanges();
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+
+    // Cleanup engine
+    gameLogicSystem->finalize();
 
     // Cleanup
     glfwDestroyWindow(window);

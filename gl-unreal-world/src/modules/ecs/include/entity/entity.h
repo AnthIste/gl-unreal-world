@@ -1,13 +1,13 @@
 #ifndef INC_ENTITY_ENTITY_H
 #define INC_ENTITY_ENTITY_H
 
-#include <vector>
+#include <set>
 
 namespace ecsentity {
 
 struct Entity {
     unsigned int id;
-    std::vector<unsigned int> components;
+    std::set<unsigned int> components;
 };
 
 };

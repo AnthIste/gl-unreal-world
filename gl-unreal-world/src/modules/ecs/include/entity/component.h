@@ -3,9 +3,11 @@
 
 namespace ecsentity {
 
+typedef unsigned int component_t;
+
 struct Component {
     unsigned int id;
-    unsigned int type;
+    component_t type;
 
     virtual ~Component() {}
 };
