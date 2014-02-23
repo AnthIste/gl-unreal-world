@@ -12,6 +12,8 @@
 // execution should be deferred to subsystems.
 ////////////////////////////////////////////////////////////////
 
+#include "entity/entity_manager.h"
+
 #ifndef __GLFW_INCLUDED__
 #define __GLFW_INCLUDED__
 #define GLFW_INCLUDE_GL_3
@@ -19,8 +21,11 @@
 #include <GLFW/glfw3.h>
 #endif
 
+#include <memory>
 #include <iostream>
 #include <cstdlib>
+
+using entity::EntityManager;
 
 const char* WindowTitle = "The Unreal World";
 const int WindowWidth = 640;
@@ -60,6 +65,9 @@ int main()
 
     // Initialize OpenGL
     init_opengl(window);
+
+    // Initialize game engine
+    auto entityManager = std::make_shared<entity::EntityManager>();
 
     // Enter main window loop
     while (!glfwWindowShouldClose(window))

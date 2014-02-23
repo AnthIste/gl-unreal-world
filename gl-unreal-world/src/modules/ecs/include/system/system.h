@@ -15,7 +15,9 @@ public:
 
     virtual ~System();
 
-    virtual void initialize() = 0;
+    virtual void initialize();
+
+    virtual void finalize();
 
     virtual void entitiesAdded(std::vector<entity::Entity> entities);
 

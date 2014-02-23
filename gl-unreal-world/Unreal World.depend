@@ -1,6 +1,20 @@
 # depslib dependency file v1.0
-1393163493 source:/home/salad/Code/OpenGL/ecs/gl-unreal-world/src/main.cc
+1393178067 source:/home/salad/Code/OpenGL/ecs/gl-unreal-world/src/main.cc
+	"entity/entity_manager.h"
 	<GLFW/glfw3.h>
+	<memory>
 	<iostream>
 	<cstdlib>
+
+1393177994 /home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/ecs/include/entity/entity_manager.h
+	"entity/entity_subscriber.h"
+	<set>
+	<map>
+
+1393170815 /home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/ecs/include/entity/entity_subscriber.h
+	"entity/entity.h"
+	<vector>
+
+1393163096 /home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/ecs/include/entity/entity.h
+	<vector>
 

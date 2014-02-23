@@ -24,6 +24,12 @@ public:
     // in subscribing to.
     void subscribeComponentChanges(EntitySubscriber* subscriber, std::set<unsigned int> componentTypes);
 
+    // The subscriber will no longer be notified of any changes. All references
+    // to the subscriber are guaranteed to be removed.
+    void unsubscribe(EntitySubscriber* subscriber);
+
+    void foo();
+
 private:
     std::set<EntitySubscriber*> _entitySubscribers;
 

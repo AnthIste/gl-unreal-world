@@ -12,10 +12,12 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c++0x" />
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
 					<Add option="-lglfw -lGL -lGLU -lX11 -lXxf86vm -lXrandr -lpthread -Lxi" />
+					<Add library="src/modules/ecs/bin/Debug/libecs.so" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -30,19 +32,9 @@
 					<Add option="-s" />
 				</Linker>
 			</Target>
-			<Target title="gfx">
-				<Option output="bin/gfx/Unreal World" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="" />
-				<Option object_output="obj/gfx/" />
-				<Option type="2" />
-				<Option compiler="gcc" />
-				<Option createDefFile="1" />
-				<Compiler>
-					<Add option="-g" />
-				</Compiler>
-			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++0x" />
 			<Add option="-Wall" />
 			<Add directory="src/modules/ecs/include" />
 			<Add directory="src/modules/gfx/include" />

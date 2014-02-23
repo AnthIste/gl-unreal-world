@@ -1,6 +1,7 @@
 #include "entity/entity_manager.h"
 
 #include <algorithm>
+#include <iostream>
 
 using std::set;
 using std::map;
@@ -26,6 +27,16 @@ void EntityManager::subscribeComponentChanges(EntitySubscriber* subscriber, set<
         auto subscriberList = _componentSubscribers[componentType];
 
         subscriberList.insert(subscriber);
+    }
+}
+
+void EntityManager::unsubscribe(EntitySubscriber* subscriber)
+{
+    _entitySubscribers.erase(subscriber);
+
+    for (auto kvp : _componentSubscribers) {
+        auto subscriberList = kvp.second;
+        subscriberList.erase(subscriber);
     }
 }
 
