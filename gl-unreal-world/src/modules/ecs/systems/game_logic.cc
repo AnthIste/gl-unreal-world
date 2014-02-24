@@ -9,9 +9,8 @@ void GameLogicSystem::initialize()
 {
 }
 
-void GameLogicSystem::entitiesAdded(std::vector<ecsentity::Entity> entities)
+void GameLogicSystem::finalize()
 {
-    // Filter by component types and add to local storage
 }
 
 };

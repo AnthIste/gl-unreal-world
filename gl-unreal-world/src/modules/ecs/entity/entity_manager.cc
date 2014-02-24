@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <vector>
 
 using std::shared_ptr;
 using std::set;
@@ -21,71 +22,53 @@ EntityManager::~EntityManager()
 {
 }
 
-void EntityManager::registerEntity(shared_ptr<Entity> entity) {
+void EntityManager::registerEntity(shared_ptr<Entity> entity)
+{
     entity->id = newIdentity();
-
-    _entitiesToAdd.insert(entity);
-    _entitiesToRemove.erase(entity);
+    _entitiesById[entity->id] = entity;
 }
 
-void EntityManager::deregisterEntity(shared_ptr<Entity> entity) {
-    _entitiesToRemove.insert(entity);
-    _entitiesToAdd.erase(entity);
+void EntityManager::deregisterEntity(shared_ptr<Entity> entity)
+{
+    _entitiesById.erase(entity->id);
 }
 
-void EntityManager::addComponent(std::shared_ptr<Entity> entity, shared_ptr<Component> component) {
+template <typename TComponent>
+void EntityManager::addComponent(shared_ptr<Entity> entity, shared_ptr<TComponent> component)
+{
+    auto key = typeid(TComponent).hash_code();
+
     component->id = newIdentity();
-
-    entity->components.insert(component->id);
+    entity->components[key] = component->id;
 }
 
-void EntityManager::removeComponent(std::shared_ptr<Entity> entity, unsigned int componentId) {
-}
-
-void EntityManager::publishChanges() {
-    if (_entitiesToAdd.size() == 0 && _entitiesToRemove.size() == 0) {
-        return;
-    }
-
-    for (auto entity : _entitiesToAdd) {
-        _entitiesById[entity->id] = entity;
-    }
-
-    // Publish to subscribers
-    std::cout << _entitiesToAdd.size() << " entities added" << std::endl;
-
-    for (auto entity : _entitiesToRemove) {
-        _entitiesById.erase(entity->id);
-    }
-
-    // Publish to subscribers
-
-    _entitiesToAdd.clear();
-    _entitiesToRemove.clear();
-}
-
-void EntityManager::subscribeEntityChanges(EntitySubscriber* subscriber)
+template <typename TComponent>
+void EntityManager::removeComponent(shared_ptr<Entity> entity)
 {
-    _entitySubscribers.insert(subscriber);
+    auto key = typeid(TComponent).hash_code();
+
+    entity->components.erase(key);
 }
 
-void EntityManager::subscribeComponentChanges(EntitySubscriber* subscriber, set<component_t> componentTypes)
+template <typename TComponent>
+shared_ptr<TComponent> EntityManager::getComponent(shared_ptr<Entity> entity) const
 {
-    for (auto componentType : componentTypes) {
-        auto subscriberList = _componentSubscribers[componentType];
-
-        subscriberList.insert(subscriber);
-    }
+    return nullptr;
 }
 
-void EntityManager::unsubscribe(EntitySubscriber* subscriber)
+set<shared_ptr<Entity>> EntityManager::allEntities() const
 {
-    _entitySubscribers.erase(subscriber);
+    // TODO: move to utility library
+    // Also, this should probably be cached...
+    std::set<shared_ptr<Entity>> values;
 
-    for (auto kvp : _componentSubscribers) {
-        auto subscriberList = kvp.second;
-        subscriberList.erase(subscriber);
-    }
+    std::transform(
+        _entitiesById.begin(),
+        _entitiesById.end(),
+        std::inserter(values, values.begin()),
+        [](EntityMap::value_type val) { return val.second; } );
+
+    return values;
 }
 
 unsigned int EntityManager::newIdentity()

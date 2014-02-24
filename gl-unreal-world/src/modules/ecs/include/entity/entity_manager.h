@@ -13,38 +13,42 @@ namespace ecsentity {
 
 class EntityManager {
 public:
+    typedef std::set<std::shared_ptr<Entity>> EntitySet;
+
+public:
     EntityManager();
 
     virtual ~EntityManager();
 
-    // Makes an entity known to the system
     void registerEntity(std::shared_ptr<Entity> entity);
 
-    // Makes an entity unknown to the system
+    /// <summary>
+    /// Makes an entity unknown to the system
+    /// </summary>
     void deregisterEntity(std::shared_ptr<Entity> entity);
 
-    // Associate a component with an entity and make the component known to the system
-    void addComponent(std::shared_ptr<Entity> entity, std::shared_ptr<Component> component);
+    /// <summary>
+    /// Associate a component with an entity and make the component known to the system
+    /// </summary>
+    template <typename TComponent>
+    void addComponent(std::shared_ptr<Entity> entity, std::shared_ptr<TComponent> component);
 
-    // Unassociate a component with an entity and make the component unknown to the system
-    void removeComponent(std::shared_ptr<Entity> entity, unsigned int componentId);
+    /// <summary>
+    /// Unassociate a component with an entity and make the component unknown to the system
+    /// </summary>
+    template <typename TComponent>
+    void removeComponent(std::shared_ptr<Entity> entity);
 
-    // Notifies all subscribers about changes to known entities
-    void publishChanges();
+    /// <summary>
+    /// Unassociate a component with an entity and make the component unknown to the system
+    /// </summary>
+    template <typename TComponent>
+    std::shared_ptr<TComponent> getComponent(std::shared_ptr<Entity> entity) const;
 
-    // The subscriber will be notified if an entity is registered or
-    // unregistered with the EntityManager
-    void subscribeEntityChanges(EntitySubscriber* subscriber);
-
-    // The subscriber will be notified if an entity's component set changes.
-    // That is, if a component is added or removed from an entity.
-    // The subscriber must provide a set of component types that it is interested
-    // in subscribing to.
-    void subscribeComponentChanges(EntitySubscriber* subscriber, std::set<component_t> componentTypes);
-
-    // The subscriber will no longer be notified of any changes. All references
-    // to the subscriber are guaranteed to be removed.
-    void unsubscribe(EntitySubscriber* subscriber);
+    /// <summary>
+    /// Returns a collection of all known entities
+    /// </summary>
+    EntitySet allEntities() const;
 
 private:
     // Assumes a single-threaded environment. Returns monotonically
@@ -52,26 +56,14 @@ private:
     unsigned int newIdentity();
 
 private:
-    // Buffer of registered entities
-    std::set<std::shared_ptr<Entity> > _entitiesToAdd;
-
-    // Buffer of deregistered entities
-    std::set<std::shared_ptr<Entity> > _entitiesToRemove;
+    typedef std::map<unsigned int, std::shared_ptr<Entity>> EntityMap;
+    typedef std::map<unsigned int, std::shared_ptr<Component>> ComponentMap;
 
     // All entities, indexed by ID
-    std::map<unsigned int, std::shared_ptr<Entity> > _entitiesById;
+    EntityMap _entitiesById;
 
     // All components, indexed by id
-    std::map<unsigned int, std::shared_ptr<Component> > _componentsById;
-
-    // All components, indexed by type
-    std::map<component_t, std::shared_ptr<Component> > _componentsByType;
-
-    // Subscribers to entity add/remove events
-    std::set<EntitySubscriber*> _entitySubscribers;
-
-    // Subscribers to component add/remove events
-    std::map<component_t, std::set<EntitySubscriber*> > _componentSubscribers;
+    ComponentMap _componentsById;
 
     // Misc
     unsigned int _identitySeed;

@@ -14,7 +14,7 @@ public:
 
     virtual void initialize();
 
-    virtual void entitiesAdded(std::vector<ecsentity::Entity> entities);
+    virtual void finalize();
 };
 
 };

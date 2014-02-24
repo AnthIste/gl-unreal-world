@@ -12,10 +12,7 @@
 // execution should be deferred to subsystems.
 ////////////////////////////////////////////////////////////////
 
-#include "entity/entity.h"
-#include "entity/entity_manager.h"
-#include "systems/game_logic.h"
-#include "components/moveable.h"
+#include "game/game.h"
 
 #ifndef __GLFW_INCLUDED__
 #define __GLFW_INCLUDED__
@@ -28,10 +25,7 @@
 #include <iostream>
 #include <cstdlib>
 
-using ecsentity::Entity;
-using ecsentity::EntityManager;
-using ecssystems::GameLogicSystem;
-using ecscomponents::Moveable;
+using ecsgame::Game;
 
 const char* WindowTitle = "The Unreal World";
 const int WindowWidth = 640;
@@ -72,34 +66,24 @@ int main()
     // Initialize OpenGL
     init_opengl(window);
 
-    // Initialize game engine and systems
-    auto entityManager = std::make_shared<EntityManager>();
-    auto gameLogicSystem = std::make_shared<GameLogicSystem>(entityManager);
-
-    gameLogicSystem->initialize();
-
-    // Initialize entities
-    auto shipEntity = std::make_shared<Entity>();
-
-    entityManager->registerEntity(shipEntity);
-    entityManager->addComponent(shipEntity, std::make_shared<Moveable>());
-
-    entityManager->publishChanges();
+    // Initialize game engine
+    auto game = std::make_shared<Game>();
 
     // Enter main window loop
     while (!glfwWindowShouldClose(window))
     {
-        render_scene();
-
         // Update game engine
-        entityManager->publishChanges();
+        game->tick();
+
+        // TODO: move to internal game systems
+        render_scene();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
     // Cleanup engine
-    gameLogicSystem->finalize();
+    game->finalize();
 
     // Cleanup
     glfwDestroyWindow(window);

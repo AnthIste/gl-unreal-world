@@ -8,18 +8,16 @@
 
 namespace ecssystem {
 
-class System : public ecsentity::EntitySubscriber {
+class System {
 public:
     System(std::shared_ptr<ecsentity::EntityManager> entityManager)
         : _entityManager(entityManager) { }
 
     virtual ~System();
 
-    virtual void initialize();
+    virtual void initialize() = 0;
 
-    virtual void finalize();
-
-    virtual void entitiesAdded(std::vector<ecsentity::Entity> entities);
+    virtual void finalize() = 0;
 
 protected:
     virtual std::shared_ptr<ecsentity::EntityManager> entityManager() { return _entityManager; }
