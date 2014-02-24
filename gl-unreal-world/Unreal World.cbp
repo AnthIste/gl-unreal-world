@@ -16,7 +16,6 @@
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
-					<Add option="-lglfw -lGL -lGLU -lX11 -lXxf86vm -lXrandr -lpthread -Lxi" />
 					<Add library="src/modules/ecs/bin/Debug/libecs.so" />
 				</Linker>
 			</Target>

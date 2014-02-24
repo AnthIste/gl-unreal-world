@@ -1,12 +1,25 @@
 Import('env')
 
+env.Append(CXXFLAGS=['-std=c++0x'])
+
 env.Append(CPPPATH=[
     'modules/ecs/include',
-    'modules/ecs/include/entity',
     'modules/ecs/include/components',
+    'modules/ecs/include/entity',
+    'modules/ecs/include/game',
     'modules/ecs/include/system',
     'modules/ecs/include/systems',
     'modules/gfx/include',
     'modules/uwl/include'])
 
-env.Program('main', Glob('*.cc') + Glob('modules/ecs/*.cc') + Glob('modules/uwl/*.cc'), LIBS=['glfw', 'GL', 'GLU', 'X11', 'Xxf86vm', 'Xrandr', 'pthread', 'Xi'])
+env.Program(
+    'main',
+    Glob('*.cc') +
+    Glob('modules/ecs/*.cc') +
+    Glob('modules/ecs/components/*.cc') +
+    Glob('modules/ecs/entity/*.cc') +
+    Glob('modules/ecs/game/*.cc') +
+    Glob('modules/ecs/system/*.cc') +
+    Glob('modules/ecs/systems/*.cc') +
+    Glob('modules/uwl/*.cc'),
+    LIBS=['glfw', 'GL', 'GLU', 'X11', 'Xxf86vm', 'Xrandr', 'pthread', 'Xi'])

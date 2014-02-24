@@ -13,4 +13,8 @@ void GameLogicSystem::finalize()
 {
 }
 
+void GameLogicSystem::tick(long t)
+{
+}
+
 };

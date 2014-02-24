@@ -3,6 +3,7 @@
 
 #include "entity/entity_manager.h"
 #include "systems/game_logic.h"
+#include "systems/gfx_system.h"
 
 #include <memory>
 
@@ -18,12 +19,16 @@ public:
 
     void finalize();
 
+    bool isDone();
+
     void tick();
 
 private:
     std::shared_ptr<ecsentity::EntityManager> _entityManager;
 
     std::shared_ptr<ecssystems::GameLogicSystem> _gameLogicSystem;
+
+    std::shared_ptr<ecssystems::GfxSystem> _gfxSystem;
 
 };
 

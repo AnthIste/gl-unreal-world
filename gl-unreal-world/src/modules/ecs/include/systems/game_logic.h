@@ -15,6 +15,8 @@ public:
     virtual void initialize();
 
     virtual void finalize();
+
+    virtual void tick(long t);
 };
 
 };

@@ -25,12 +25,12 @@ EntityManager::~EntityManager()
 void EntityManager::registerEntity(shared_ptr<Entity> entity)
 {
     entity->id = newIdentity();
-    _entitiesById[entity->id] = entity;
+    _entitiesAdded[entity->id] = entity;
 }
 
 void EntityManager::deregisterEntity(shared_ptr<Entity> entity)
 {
-    _entitiesById.erase(entity->id);
+    _entitiesDestroyed[entity->id] = entity;
 }
 
 template <typename TComponent>
@@ -69,6 +69,25 @@ set<shared_ptr<Entity>> EntityManager::allEntities() const
         [](EntityMap::value_type val) { return val.second; } );
 
     return values;
+}
+
+void EntityManager::tick(long t)
+{
+    // Add new entities
+    for (auto kvp : _entitiesAdded) {
+        auto id = kvp.first;
+        auto entity = kvp.second;
+
+        _entitiesById[entity->id] = entity;
+    }
+
+    // Remove deleted entities
+    for (auto kvp : _entitiesDestroyed) {
+        auto id = kvp.first;
+        auto entity = kvp.second;
+
+        _entitiesById.erase(entity->id);
+    }
 }
 
 unsigned int EntityManager::newIdentity()

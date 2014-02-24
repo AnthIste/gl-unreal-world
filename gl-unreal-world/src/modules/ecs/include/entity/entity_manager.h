@@ -20,6 +20,9 @@ public:
 
     virtual ~EntityManager();
 
+    /// <summary>
+    /// Makes an entity known to the system
+    /// </summary>
     void registerEntity(std::shared_ptr<Entity> entity);
 
     /// <summary>
@@ -50,6 +53,11 @@ public:
     /// </summary>
     EntitySet allEntities() const;
 
+    /// <summary>
+    /// Do time-related work
+    /// </summary>
+    void tick(long t);
+
 private:
     // Assumes a single-threaded environment. Returns monotonically
     // increasing identifiers.
@@ -67,6 +75,11 @@ private:
 
     // Misc
     unsigned int _identitySeed;
+
+    // These buffers should probably be replaced by a Command
+    // on the message bus
+    EntityMap _entitiesAdded;
+    EntityMap _entitiesDestroyed;
 };
 
 };

@@ -1,15 +1,9 @@
 # depslib dependency file v1.0
-1393181370 source:/home/salad/Code/OpenGL/ecs/gl-unreal-world/src/main.cc
-	"entity/entity.h"
-	"entity/entity_manager.h"
-	"systems/game_logic.h"
-	"components/moveable.h"
-	<GLFW/glfw3.h>
+1393271502 source:/home/salad/Code/OpenGL/ecs/gl-unreal-world/src/main.cc
+	"game/game.h"
 	<memory>
-	<iostream>
-	<cstdlib>
 
-1393181132 /home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/ecs/include/entity/entity_manager.h
+1393269377 /home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/ecs/include/entity/entity_manager.h
 	"entity/entity_subscriber.h"
 	"entity/entity.h"
 	"entity/component.h"
@@ -21,19 +15,29 @@
 	"entity/entity.h"
 	<vector>
 
-1393180933 /home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/ecs/include/entity/entity.h
-	<set>
+1393265584 /home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/ecs/include/entity/entity.h
+	<map>
 
 1393180448 /home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/ecs/include/entity/component.h
 
-1393179749 /home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/ecs/include/systems/game_logic.h
+1393269295 /home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/ecs/include/systems/game_logic.h
 	"system/system.h"
 
-1393179737 /home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/ecs/include/system/system.h
+1393269251 /home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/ecs/include/system/system.h
 	"entity/entity_manager.h"
 	"entity/entity_subscriber.h"
 	<memory>
 
 1393179592 /home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/ecs/include/components/moveable.h
 	"entity/component.h"
+
+1393271353 /home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/ecs/include/game/game.h
+	"entity/entity_manager.h"
+	"systems/game_logic.h"
+	"systems/gfx_system.h"
+	<memory>
+
+1393271491 /home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/ecs/include/systems/gfx_system.h
+	"system/system.h"
+	<GLFW/glfw3.h>
 
