@@ -1,12 +1,6 @@
 ////////////////////////////////////////////////////////////////
 // Program Boostrapper
 //
-// Responsibilities:
-//  - Create a window
-//  - Set up window loop
-//  - Initialize subsystems
-//  - Begin subsystem execution
-//
 // This file is just for starting up the program and
 // interacting with the system environment. The rest of the
 // execution should be deferred to subsystems.

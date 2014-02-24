@@ -19,6 +19,36 @@ void GfxSystem::initialize()
 {
     GfxSystem::current_instance = this;
 
+    init_window();
+    init_renderer();
+
+    _vbo = _renderer->create_vbo();
+}
+
+void GfxSystem::finalize()
+{
+    shutdown_renderer();
+    destroy_window();
+}
+
+bool GfxSystem::windowCanClose()
+{
+    return glfwWindowShouldClose(_window);
+}
+
+void GfxSystem::tick(long t)
+{
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    render_scene();
+
+    glfwSwapBuffers(_window);
+    glfwPollEvents();
+}
+
+void GfxSystem::init_window()
+{
     // Initialize error handler
     glfwSetErrorCallback(GfxSystem::s_error_callback);
 
@@ -42,42 +72,30 @@ void GfxSystem::initialize()
     glfwSetWindowSizeCallback(_window, GfxSystem::s_window_size_callback);
     glfwSetKeyCallback(_window, GfxSystem::s_key_callback);
 
-    // Initialize OpenGL
-    init_opengl();
+    // Configure OpenGL context
+    glfwMakeContextCurrent(_window);
 }
 
-void GfxSystem::finalize()
+void GfxSystem::destroy_window()
 {
     glfwDestroyWindow(_window);
     glfwTerminate();
 }
 
-bool GfxSystem::windowCanClose()
+void GfxSystem::init_renderer()
 {
-    return glfwWindowShouldClose(_window);
+    _renderer->initialize();
+    _renderer->set_cull_render_mode();
 }
 
-void GfxSystem::tick(long t)
+void GfxSystem::shutdown_renderer()
 {
-    render_scene();
-
-    glfwSwapBuffers(_window);
-    glfwPollEvents();
-}
-
-void GfxSystem::init_opengl()
-{
-    glfwMakeContextCurrent(_window);
-
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-    glFrontFace(GL_CW);
+    _renderer->finalize();
 }
 
 void GfxSystem::render_scene()
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    _renderer->render_colored_triangle(_vbo, 0.0f, 0.0f);
 }
 
 void GfxSystem::window_size_callback(GLFWwindow* window, int width, int height)

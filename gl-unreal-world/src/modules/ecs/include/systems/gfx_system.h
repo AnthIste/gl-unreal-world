@@ -2,6 +2,7 @@
 #define INC_SYSTEMS_GFX_SYSTEM_H
 
 #include "system/system.h"
+#include "gfx/renderer.h"
 
 #ifndef __GLFW_INCLUDED__
 #define __GLFW_INCLUDED__
@@ -9,6 +10,8 @@
 #define GL_GLEXT_PROTOTYPES 1
 #include <GLFW/glfw3.h>
 #endif
+
+#include <memory>
 
 namespace ecssystems {
 
@@ -32,7 +35,13 @@ public:
     static GfxSystem* current_instance;
 
 private:
-    void init_opengl();
+    void init_window();
+
+    void init_renderer();
+
+    void destroy_window();
+
+    void shutdown_renderer();
 
     void render_scene();
 
@@ -52,6 +61,11 @@ private:
 
 private:
     GLFWwindow* _window;
+
+    std::shared_ptr<ecsgfx::OpenGLRenderer> _renderer;
+
+    // Temp testing data
+    GLuint _vbo;
 
 };
 

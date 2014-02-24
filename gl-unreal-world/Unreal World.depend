@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1393271502 source:/home/salad/Code/OpenGL/ecs/gl-unreal-world/src/main.cc
+1393271750 source:/home/salad/Code/OpenGL/ecs/gl-unreal-world/src/main.cc
 	"game/game.h"
 	<memory>
 
@@ -37,7 +37,12 @@
 	"systems/gfx_system.h"
 	<memory>
 
-1393271491 /home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/ecs/include/systems/gfx_system.h
+1393273042 /home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/ecs/include/systems/gfx_system.h
 	"system/system.h"
+	"gfx/renderer.h"
+	<GLFW/glfw3.h>
+	<memory>
+
+1393273186 /home/salad/Code/OpenGL/ecs/gl-unreal-world/src/modules/ecs/include/gfx/renderer.h
 	<GLFW/glfw3.h>
 
