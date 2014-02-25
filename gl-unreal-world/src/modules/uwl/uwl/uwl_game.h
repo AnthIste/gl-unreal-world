@@ -4,6 +4,7 @@
 #include "uwlman/uwlman_entity_manager.h"
 #include "uwlsys/uwlsys_game_logic_system.h"
 #include "uwlsys/uwlsys_gfx_system.h"
+#include "oglwin/oglwin_window_manager.h"
 
 #include <memory>
 
@@ -24,6 +25,8 @@ public:
     void tick();
 
 private:
+    std::shared_ptr<oglwin::WindowManager> _windowManager;
+
     std::shared_ptr<uwlman::EntityManager> _entityManager;
 
     std::shared_ptr<uwlsys::GameLogicSystem> _gameLogicSystem;

@@ -14,6 +14,12 @@ void OpenGLRenderer::finalize()
 {
 }
 
+void OpenGLRenderer::clear_frame()
+{
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
 void OpenGLRenderer::set_cull_render_mode()
 {
     glEnable(GL_CULL_FACE);

@@ -7,11 +7,17 @@ using uwlec::Component;
 using uwlman::EntityManager;
 using uwlsys::GameLogicSystem;
 using uwlsys::GfxSystem;
+using oglwin::WindowManager;
 
 namespace uwl {
 
+const char* WindowTitle = "The Unreal World";
+const int WindowWidth = 640;
+const int WindowHeight = 640;
+
 Game::Game()
 {
+    _windowManager = std::make_shared<WindowManager>();
     _entityManager = std::make_shared<EntityManager>();
     _gameLogicSystem = std::make_shared<GameLogicSystem>(_entityManager);
     _gfxSystem = std::make_shared<GfxSystem>(_entityManager);
@@ -23,6 +29,9 @@ Game::~Game()
 
 void Game::initialize()
 {
+    // Initialize window
+    _windowManager->createWindow(WindowTitle, WindowWidth, WindowHeight);
+
     // Initialize systems
     _gfxSystem->initialize();
     _gameLogicSystem->initialize();
@@ -36,11 +45,12 @@ void Game::finalize()
 {
     _gameLogicSystem->finalize();
     _gfxSystem->finalize();
+    _windowManager->closeWindow();
 }
 
 bool Game::isDone()
 {
-    return _gfxSystem->windowCanClose();
+    return _windowManager->windowCanClose();
 }
 
 void Game::tick()
@@ -56,6 +66,9 @@ void Game::tick()
 
     // Update GFX
     _gfxSystem->tick(dt);
+
+    // Present to window
+    _windowManager->redrawWindow();
 }
 
 };

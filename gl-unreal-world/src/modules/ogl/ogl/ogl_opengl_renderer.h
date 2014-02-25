@@ -20,6 +20,8 @@ public:
 
     void finalize();
 
+    void clear_frame();
+
     void set_cull_render_mode();
 
     void render_colored_triangle(GLuint vbo, GLfloat dx, GLfloat dy);
