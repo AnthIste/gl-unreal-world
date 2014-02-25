@@ -1,0 +1,25 @@
+#ifndef INC_SYSTEMS_GAME_LOGIC_H
+#define INC_SYSTEMS_GAME_LOGIC_H
+
+#include "uwlsys_system.h"
+#include "uwlman/uwlman_entity_manager.h"
+
+namespace uwlsys {
+
+class GameLogicSystem : public uwlsys::System {
+public:
+    GameLogicSystem(std::shared_ptr<uwlman::EntityManager> entityManager)
+        : uwlsys::System(entityManager) { }
+
+    virtual ~GameLogicSystem() { }
+
+    virtual void initialize();
+
+    virtual void finalize();
+
+    virtual void tick(long t);
+};
+
+};
+
+#endif

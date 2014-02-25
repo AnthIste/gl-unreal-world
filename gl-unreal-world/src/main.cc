@@ -6,11 +6,11 @@
 // execution should be deferred to subsystems.
 ////////////////////////////////////////////////////////////////
 
-#include "game/game.h"
+#include "uwl/uwl_game.h"
 
 #include <memory>
 
-using ecsgame::Game;
+using uwl::Game;
 
 int main()
 {
