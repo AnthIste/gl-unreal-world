@@ -26,6 +26,8 @@ public:
 
     void render_colored_triangle(GLuint vbo, GLfloat dx, GLfloat dy);
 
+    void set_shader_program(GLuint program);
+
     GLuint create_vbo();
 };
 

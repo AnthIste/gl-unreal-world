@@ -29,8 +29,6 @@ void OpenGLRenderer::set_cull_render_mode()
 
 void OpenGLRenderer::render_colored_triangle(GLuint vbo, GLfloat dx, GLfloat dy)
 {
-    // TODO: use shader
-
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
@@ -42,7 +40,12 @@ void OpenGLRenderer::render_colored_triangle(GLuint vbo, GLfloat dx, GLfloat dy)
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(0);
 
-    // TODO: cleanup shader
+    glUseProgram(0);
+}
+
+void OpenGLRenderer::set_shader_program(GLuint program)
+{
+    glUseProgram(program);
 }
 
 GLuint OpenGLRenderer::create_vbo()

@@ -1,15 +1,35 @@
-#include "oglres_shader_utils.h"
+#include "oglres_asset_manager.h"
 
 #include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-#include <algorithm>
+
+namespace oglres {
+
+AssetManager::~AssetManager()
+{
+}
+
+GLuint AssetManager::loadShaderProgram(std::string shaderName)
+{
+    std::vector<GLuint> shaderList;
+    std::string vertexShaderFile = shaderName + ".vert";
+    std::string fragmentShaderFile = shaderName + ".frag";
+
+    std::string vertexShaderContents = loadShaderString(vertexShaderFile);
+    std::string fragmentShaderContents = loadShaderString(fragmentShaderFile);
+
+    shaderList.push_back(create_shader(GL_VERTEX_SHADER, vertexShaderContents));
+    shaderList.push_back(create_shader(GL_FRAGMENT_SHADER, fragmentShaderContents));
+
+    return create_shader_program(shaderList);
+}
 
 // Adapted from http://stackoverflow.com/q/2602013/761648
-std::string load_shader_from_file(std::string filename)
+std::string AssetManager::loadShaderString(std::string shaderFile)
 {
-    std::ifstream in(filename.c_str(), std::ios::in | std::ios::binary);
+    std::ifstream in;
+    std::string filename = std::string("shaders/") + shaderFile;
+
+    _fileSystem->r_open_binary_resource(filename, in);
 
     if (in)
     {
@@ -26,13 +46,11 @@ std::string load_shader_from_file(std::string filename)
         return contents;
     }
 
-    std::cerr << "Could not open " << filename << std::endl;
-
     return "";
 }
 
 // Shader link stage
-GLuint create_shader_program(const std::vector<GLuint> &shaderList)
+GLuint AssetManager::create_shader_program(const std::vector<GLuint> &shaderList)
 {
     // Create OpenGL object
     GLuint program = glCreateProgram();
@@ -68,7 +86,7 @@ GLuint create_shader_program(const std::vector<GLuint> &shaderList)
 }
 
 // Shader compile stage
-GLuint create_shader(GLenum eShaderType, const std::string &strShaderFile)
+GLuint AssetManager::create_shader(GLenum eShaderType, const std::string &strShaderFile)
 {
     // Create OpenGL object
     GLuint shader = glCreateShader(eShaderType);
@@ -104,3 +122,5 @@ GLuint create_shader(GLenum eShaderType, const std::string &strShaderFile)
 
     return shader;
 }
+
+};

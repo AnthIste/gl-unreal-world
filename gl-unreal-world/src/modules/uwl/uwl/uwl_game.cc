@@ -7,7 +7,9 @@ using uwlec::Component;
 using uwlman::EntityManager;
 using uwlsys::GameLogicSystem;
 using uwlsys::GfxSystem;
+using uwlinf::FileSystem;
 using oglwin::WindowManager;
+using oglres::AssetManager;
 
 namespace uwl {
 
@@ -17,10 +19,12 @@ const int WindowHeight = 640;
 
 Game::Game()
 {
+    _fileSystem = std::make_shared<FileSystem>();
     _windowManager = std::make_shared<WindowManager>();
     _entityManager = std::make_shared<EntityManager>();
+    _assetManager = std::make_shared<AssetManager>(_fileSystem);
     _gameLogicSystem = std::make_shared<GameLogicSystem>(_entityManager);
-    _gfxSystem = std::make_shared<GfxSystem>(_entityManager);
+    _gfxSystem = std::make_shared<GfxSystem>(_entityManager, _assetManager);
 }
 
 Game::~Game()

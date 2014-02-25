@@ -13,6 +13,7 @@ void GfxSystem::initialize()
     _renderer->initialize();
     _renderer->set_cull_render_mode();
 
+    _basicShader = _assetManager->loadShaderProgram("basic");
     _vbo = _renderer->create_vbo();
 }
 
@@ -24,6 +25,7 @@ void GfxSystem::finalize()
 void GfxSystem::tick(long t)
 {
     _renderer->clear_frame();
+    _renderer->set_shader_program(_basicShader);
     _renderer->render_colored_triangle(_vbo, 0.0f, 0.0f);
 }
 
