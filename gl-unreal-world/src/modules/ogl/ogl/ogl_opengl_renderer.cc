@@ -48,6 +48,12 @@ void OpenGLRenderer::set_shader_program(GLuint program)
     glUseProgram(program);
 }
 
+void OpenGLRenderer::set_uniform_2f(GLuint shaderProgram, std::string uniform, GLfloat x, GLfloat y)
+{
+    GLuint uniformLocation = glGetUniformLocation(shaderProgram, uniform.c_str());
+    glUniform2f(uniformLocation, x, y);
+}
+
 GLuint OpenGLRenderer::create_vbo()
 {
     GLuint bufferObject;

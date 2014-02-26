@@ -18,7 +18,7 @@ public:
 
     virtual void finalize() = 0;
 
-    virtual void tick(long t) = 0;
+    virtual void tick(double t, double dt) = 0;
 
 protected:
     virtual std::shared_ptr<uwlman::EntityManager> entityManager() { return _entityManager; }

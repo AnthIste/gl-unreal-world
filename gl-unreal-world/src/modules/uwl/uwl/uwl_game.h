@@ -39,6 +39,8 @@ private:
 
     std::shared_ptr<oglres::AssetManager> _assetManager;
 
+    double _time;
+
 };
 
 };

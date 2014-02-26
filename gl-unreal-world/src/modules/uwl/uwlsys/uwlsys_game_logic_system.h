@@ -9,7 +9,9 @@ namespace uwlsys {
 class GameLogicSystem : public uwlsys::System {
 public:
     GameLogicSystem(std::shared_ptr<uwlman::EntityManager> entityManager)
-        : uwlsys::System(entityManager) { }
+        : uwlsys::System(entityManager),
+         _entityManager(entityManager)
+    { }
 
     virtual ~GameLogicSystem() { }
 
@@ -17,7 +19,11 @@ public:
 
     virtual void finalize();
 
-    virtual void tick(long t);
+    virtual void tick(double t, double dt);
+
+private:
+    std::shared_ptr<uwlman::EntityManager> _entityManager;
+
 };
 
 };

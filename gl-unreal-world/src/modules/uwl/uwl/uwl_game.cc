@@ -1,15 +1,19 @@
 #include "uwl_game.h"
 #include "uwlec/uwlec_entity.h"
 #include "uwlec/uwlec_component.h"
+#include "uwlec/uwlec_moveable.h"
+
+// TODO: REMOVE ME !!!!!!!!!!!!!
+#ifndef __GLFW_INCLUDED__
+#define __GLFW_INCLUDED__
+#define GLFW_INCLUDE_GL_3
+#define GL_GLEXT_PROTOTYPES 1
+#include <GLFW/glfw3.h>
+#endif
+// /TODO
 
 using uwlec::Entity;
-using uwlec::Component;
-using uwlman::EntityManager;
-using uwlsys::GameLogicSystem;
-using uwlsys::GfxSystem;
-using uwlinf::FileSystem;
-using oglwin::WindowManager;
-using oglres::AssetManager;
+using uwlec::Moveable;
 
 namespace uwl {
 
@@ -19,12 +23,12 @@ const int WindowHeight = 640;
 
 Game::Game()
 {
-    _fileSystem = std::make_shared<FileSystem>();
-    _windowManager = std::make_shared<WindowManager>();
-    _entityManager = std::make_shared<EntityManager>();
-    _assetManager = std::make_shared<AssetManager>(_fileSystem);
-    _gameLogicSystem = std::make_shared<GameLogicSystem>(_entityManager);
-    _gfxSystem = std::make_shared<GfxSystem>(_entityManager, _assetManager);
+    _fileSystem = std::make_shared<uwlinf::FileSystem>();
+    _windowManager = std::make_shared<oglwin::WindowManager>();
+    _entityManager = std::make_shared<uwlman::EntityManager>();
+    _assetManager = std::make_shared<oglres::AssetManager>(_fileSystem);
+    _gameLogicSystem = std::make_shared<uwlsys::GameLogicSystem>(_entityManager);
+    _gfxSystem = std::make_shared<uwlsys::GfxSystem>(_entityManager, _assetManager);
 }
 
 Game::~Game()
@@ -42,7 +46,13 @@ void Game::initialize()
 
     // Initialize entities
     auto shipEntity = std::make_shared<Entity>();
+    auto moveableComponent = std::make_shared<Moveable>();
+
+    _entityManager->addComponent<Moveable>(shipEntity, std::make_shared<Moveable>());
     _entityManager->registerEntity(shipEntity);
+
+    // Initialize state
+    _time = 0.0;
 }
 
 void Game::finalize()
@@ -59,20 +69,28 @@ bool Game::isDone()
 
 void Game::tick()
 {
-    // Get time delta
-    long dt = 0;
+    // Get time delta (TODO: move time to utils)
+    double t = 0.0, dt = 0.0;
 
-    // Process events
-    _entityManager->tick(dt);
+    // Avoid microcosmically small time deltas
+    //while (dt < 0.001) {
+        t = glfwGetTime();
+        dt = t - _time;
+    //}
+
+    // Process entity events
+    _entityManager->processChanges();
 
     // Update game logic
-    _gameLogicSystem->tick(dt);
+    _gameLogicSystem->tick(t, dt);
 
     // Update GFX
-    _gfxSystem->tick(dt);
+    _gfxSystem->tick(t, dt);
 
     // Present to window
     _windowManager->redrawWindow();
+
+    _time = t;
 }
 
 };

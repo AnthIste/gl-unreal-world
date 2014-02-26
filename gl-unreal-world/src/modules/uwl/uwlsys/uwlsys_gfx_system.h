@@ -15,6 +15,7 @@ public:
     GfxSystem(std::shared_ptr<uwlman::EntityManager> entityManager,
               std::shared_ptr<oglres::AssetManager> assetManager)
         : uwlsys::System(entityManager),
+          _entityManager(entityManager),
           _assetManager(assetManager)
     { }
 
@@ -24,12 +25,14 @@ public:
 
     virtual void finalize();
 
-    virtual void tick(long t);
+    virtual void tick(double t, double dt);
 
 private:
     void render_scene();
 
 private:
+    std::shared_ptr<uwlman::EntityManager> _entityManager;
+
     std::shared_ptr<oglres::AssetManager> _assetManager;
 
     std::shared_ptr<ogl::OpenGLRenderer> _renderer;

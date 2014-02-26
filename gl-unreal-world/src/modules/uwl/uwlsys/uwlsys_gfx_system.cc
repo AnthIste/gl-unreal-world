@@ -1,6 +1,9 @@
 #include "uwlsys_gfx_system.h"
+#include "uwlec/uwlec_moveable.h"
 
-#include <iostream>
+using uwlec::Entity;
+using uwlec::Moveable;
+using uwlman::EntityManager;
 
 namespace uwlsys {
 
@@ -22,11 +25,21 @@ void GfxSystem::finalize()
     _renderer->finalize();
 }
 
-void GfxSystem::tick(long t)
+void GfxSystem::tick(double t, double dt)
 {
     _renderer->clear_frame();
     _renderer->set_shader_program(_basicShader);
-    _renderer->render_colored_triangle(_vbo, 0.0f, 0.0f);
+
+    EntityManager::EntitySet allEntities = _entityManager->allEntities();
+
+    for (auto entity : allEntities) {
+        auto m = _entityManager->getComponent<Moveable>(entity);
+
+        if (m != nullptr) {
+            _renderer->set_uniform_2f(_basicShader, "offset", 0.0f, m->y);
+            _renderer->render_colored_triangle(_vbo, 0.0f, 0.0f);
+        }
+    }
 }
 
 void GfxSystem::render_scene()

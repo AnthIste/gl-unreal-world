@@ -53,9 +53,9 @@ public:
     EntitySet allEntities() const;
 
     /// <summary>
-    /// Do time-related work
+    /// Commit entity changes requested in the previous tick
     /// </summary>
-    void tick(long t);
+    void processChanges();
 
 private:
     // Assumes a single-threaded environment. Returns monotonically
@@ -82,5 +82,7 @@ private:
 };
 
 };
+
+#include "uwlman_entity_manager.tcc"
 
 #endif

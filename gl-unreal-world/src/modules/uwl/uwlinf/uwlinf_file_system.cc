@@ -31,8 +31,8 @@ void FileSystem::r_open_binary_resource(std::string resourcePath, std::ifstream&
 
     if (!file) {
         std::cerr << "r_open_binary_resource failed for resource: "
-            << virtualPath
-            << std::endl;
+                  << virtualPath
+                  << std::endl;
     }
 }
 
@@ -43,8 +43,8 @@ void FileSystem::rw_open_resource(std::string resourcePath, std::fstream& file)
 
     if (!file) {
         std::cerr << "rw_open_resource failed for resource: "
-            << virtualPath
-            << std::endl;
+                  << virtualPath
+                  << std::endl;
     }
 }
 
@@ -55,8 +55,8 @@ void FileSystem::rw_open_binary_resource(std::string resourcePath, std::fstream&
 
     if (!file) {
         std::cerr << "rw_open_binary_resource failed for resource: "
-            << virtualPath
-            << std::endl;
+                  << virtualPath
+                  << std::endl;
     }
 }
 

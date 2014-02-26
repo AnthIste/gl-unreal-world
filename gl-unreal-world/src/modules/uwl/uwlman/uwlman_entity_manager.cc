@@ -33,29 +33,6 @@ void EntityManager::deregisterEntity(shared_ptr<Entity> entity)
     _entitiesDestroyed[entity->id] = entity;
 }
 
-template <typename TComponent>
-void EntityManager::addComponent(shared_ptr<Entity> entity, shared_ptr<TComponent> component)
-{
-    auto key = typeid(TComponent).hash_code();
-
-    component->id = newIdentity();
-    entity->components[key] = component->id;
-}
-
-template <typename TComponent>
-void EntityManager::removeComponent(shared_ptr<Entity> entity)
-{
-    auto key = typeid(TComponent).hash_code();
-
-    entity->components.erase(key);
-}
-
-template <typename TComponent>
-shared_ptr<TComponent> EntityManager::getComponent(shared_ptr<Entity> entity) const
-{
-    return nullptr;
-}
-
 set<shared_ptr<Entity>> EntityManager::allEntities() const
 {
     // TODO: move to utility library
@@ -71,7 +48,7 @@ set<shared_ptr<Entity>> EntityManager::allEntities() const
     return values;
 }
 
-void EntityManager::tick(long t)
+void EntityManager::processChanges()
 {
     // Add new entities
     for (auto kvp : _entitiesAdded) {

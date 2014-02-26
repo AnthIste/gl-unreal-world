@@ -8,6 +8,8 @@
 #include <GLFW/glfw3.h>
 #endif
 
+#include <string>
+
 namespace ogl {
 
 class OpenGLRenderer {
@@ -27,6 +29,8 @@ public:
     void render_colored_triangle(GLuint vbo, GLfloat dx, GLfloat dy);
 
     void set_shader_program(GLuint program);
+
+    void set_uniform_2f(GLuint shaderProgram, std::string uniform, GLfloat x, GLfloat y);
 
     GLuint create_vbo();
 };
