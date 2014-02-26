@@ -21,6 +21,8 @@ const char* WindowTitle = "The Unreal World";
 const int WindowWidth = 640;
 const int WindowHeight = 640;
 
+static void createEntity(std::shared_ptr<uwlman::EntityManager> _entityManager, double x);
+
 Game::Game()
 {
     _fileSystem = std::make_shared<uwlinf::FileSystem>();
@@ -45,11 +47,8 @@ void Game::initialize()
     _gameLogicSystem->initialize();
 
     // Initialize entities
-    auto shipEntity = std::make_shared<Entity>();
-    auto moveableComponent = std::make_shared<Moveable>();
-
-    _entityManager->addComponent<Moveable>(shipEntity, std::make_shared<Moveable>());
-    _entityManager->registerEntity(shipEntity);
+    createEntity(_entityManager, -0.5);
+    createEntity(_entityManager, 0.5);
 
     // Initialize state
     _time = 0.0;
@@ -91,6 +90,17 @@ void Game::tick()
     _windowManager->redrawWindow();
 
     _time = t;
+}
+
+static void createEntity(std::shared_ptr<uwlman::EntityManager> _entityManager, double x)
+{
+    auto shipEntity = std::make_shared<Entity>();
+    auto moveableComponent = std::make_shared<Moveable>();
+
+    moveableComponent->x = x;
+
+    _entityManager->registerEntity(shipEntity);
+    _entityManager->addComponent<Moveable>(shipEntity, moveableComponent);
 }
 
 };
