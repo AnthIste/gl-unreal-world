@@ -20,12 +20,13 @@ Game::Game()
     _clock = std::make_shared<uwlinf::Clock>();
     _fileSystem = std::make_shared<uwlinf::FileSystem>();
 
-    // OpenGL
-    _assetManager = std::make_shared<oglres::AssetManager>(_fileSystem);
-    _windowManager = std::make_shared<oglwin::WindowManager>();
-
     // Managers
     _entityManager = std::make_shared<uwlman::EntityManager>();
+    _inputManager = std::make_shared<uwlman::InputManager>();
+
+    // OpenGL
+    _assetManager = std::make_shared<oglres::AssetManager>(_fileSystem);
+    _windowManager = std::make_shared<oglwin::WindowManager>(_inputManager);
 
     // Systems
     _gameLogicSystem = std::make_shared<uwlsys::GameLogicSystem>(_entityManager);
@@ -70,6 +71,11 @@ void Game::tick()
     // Proceed time
     auto dt = _clock->tick();
     auto t = _clock->getTime();
+
+    // Process input
+    if (_inputManager->isKeyDown(256)) {
+        _windowManager->closeWindow();
+    }
 
     // Process entity events
     _entityManager->processChanges();

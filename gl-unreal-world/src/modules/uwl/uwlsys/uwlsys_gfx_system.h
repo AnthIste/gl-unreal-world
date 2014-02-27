@@ -1,5 +1,5 @@
-#ifndef INC_SYSTEMS_GFX_SYSTEM_H
-#define INC_SYSTEMS_GFX_SYSTEM_H
+#ifndef INC_UWLSYS_GFX_SYSTEM_H
+#define INC_UWLSYS_GFX_SYSTEM_H
 
 #include "uwlsys_system.h"
 #include "uwlman/uwlman_entity_manager.h"

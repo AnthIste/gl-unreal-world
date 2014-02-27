@@ -1,7 +1,8 @@
-#ifndef INC_GAME_GAME_H
-#define INC_GAME_GAME_H
+#ifndef INC_UWL_GAME_H
+#define INC_UWL_GAME_H
 
 #include "uwlman/uwlman_entity_manager.h"
+#include "uwlman/uwlman_input_manager.h"
 #include "uwlsys/uwlsys_game_logic_system.h"
 #include "uwlsys/uwlsys_gfx_system.h"
 #include "uwlinf/uwlinf_file_system.h"
@@ -29,6 +30,8 @@ public:
 
 private:
     std::shared_ptr<uwlman::EntityManager> _entityManager;
+
+    std::shared_ptr<uwlman::InputManager> _inputManager;
 
     std::shared_ptr<uwlsys::GameLogicSystem> _gameLogicSystem;
 

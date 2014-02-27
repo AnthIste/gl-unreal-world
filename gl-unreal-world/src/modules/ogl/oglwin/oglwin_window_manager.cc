@@ -7,10 +7,6 @@ namespace oglwin {
 // Used for GLFW static callback routing
 extern WindowManager* WindowManager::current_instance;
 
-WindowManager::WindowManager()
-{
-}
-
 WindowManager::~WindowManager()
 {
 }
@@ -48,8 +44,7 @@ void WindowManager::createWindow(std::string title, unsigned int width, unsigned
 
 void WindowManager::closeWindow()
 {
-    glfwDestroyWindow(_window);
-    glfwTerminate();
+    glfwSetWindowShouldClose(_window, 1);
 }
 
 bool WindowManager::windowCanClose()
@@ -73,12 +68,20 @@ void WindowManager::error_callback(int error, const char* description)
     std::cerr << description << std::endl;
 }
 
-// TODO: move to input system
 void WindowManager::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+    /*
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     {
         glfwSetWindowShouldClose(window, GL_TRUE);
+    }
+    */
+    if (action == GLFW_PRESS) {
+        _inputManager->acceptKeyDown(key, scancode, mods);
+    }
+
+    if (action == GLFW_RELEASE) {
+        _inputManager->acceptKeyUp(key, scancode, mods);
     }
 }
 

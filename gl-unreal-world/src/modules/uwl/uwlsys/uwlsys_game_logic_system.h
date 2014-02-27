@@ -1,5 +1,5 @@
-#ifndef INC_SYSTEMS_GAME_LOGIC_H
-#define INC_SYSTEMS_GAME_LOGIC_H
+#ifndef INC_UWLSYS_GAME_LOGIC_SYSTEM_H
+#define INC_UWLSYS_GAME_LOGIC_SYSTEM_H
 
 #include "uwlsys_system.h"
 #include "uwlman/uwlman_entity_manager.h"

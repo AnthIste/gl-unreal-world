@@ -8,13 +8,18 @@
 #include <GLFW/glfw3.h>
 #endif
 
+#include "uwlman/uwlman_input_manager.h"
+
+#include <memory>
 #include <string>
 
 namespace oglwin {
 
 class WindowManager {
 public:
-    WindowManager();
+    WindowManager(std::shared_ptr<uwlman::InputManager> inputManager)
+        : _inputManager(inputManager)
+    { }
 
     virtual ~WindowManager();
 
@@ -45,6 +50,8 @@ private:
     static void s_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 private:
+    std::shared_ptr<uwlman::InputManager> _inputManager;
+
     GLFWwindow* _window;
 
 };
