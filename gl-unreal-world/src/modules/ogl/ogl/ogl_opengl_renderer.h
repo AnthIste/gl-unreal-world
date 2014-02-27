@@ -22,15 +22,15 @@ public:
 
     void finalize();
 
-    void clear_frame();
-
     void set_cull_render_mode();
-
-    void render_colored_triangle(GLuint vbo, GLfloat dx, GLfloat dy);
 
     void set_shader_program(GLuint program);
 
     void set_uniform_2f(GLuint shaderProgram, std::string uniform, GLfloat x, GLfloat y);
+
+    void render_clear_frame();
+
+    void render_triangles(GLuint vbo, int nTriangles);
 
     GLuint create_vbo();
 };

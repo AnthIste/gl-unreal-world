@@ -14,7 +14,7 @@ void OpenGLRenderer::finalize()
 {
 }
 
-void OpenGLRenderer::clear_frame()
+void OpenGLRenderer::render_clear_frame()
 {
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -27,19 +27,16 @@ void OpenGLRenderer::set_cull_render_mode()
     glFrontFace(GL_CW);
 }
 
-void OpenGLRenderer::render_colored_triangle(GLuint vbo, GLfloat dx, GLfloat dy)
+void OpenGLRenderer::render_triangles(GLuint vbo, int nTriangles)
 {
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
     glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(GLfloat) * 4 * 3));
 
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLES, 0, 3 * nTriangles);
 
-    glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(0);
-
     glUseProgram(0);
 }
 

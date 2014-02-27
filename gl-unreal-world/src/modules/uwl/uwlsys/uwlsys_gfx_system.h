@@ -5,6 +5,7 @@
 #include "uwlman/uwlman_entity_manager.h"
 #include "oglres/oglres_asset_manager.h"
 #include "ogl/ogl_opengl_renderer.h"
+#include "uwlec/uwlec_moveable.h"
 
 #include <memory>
 
@@ -28,7 +29,7 @@ public:
     virtual void tick(double t, double dt);
 
 private:
-    void render_scene();
+    void render_moveable(std::shared_ptr<uwlec::Moveable> m);
 
 private:
     std::shared_ptr<uwlman::EntityManager> _entityManager;
