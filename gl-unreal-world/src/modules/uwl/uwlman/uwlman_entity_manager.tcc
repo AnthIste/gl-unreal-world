@@ -1,4 +1,7 @@
-// Template implementation of uwlman_entity_manager.h
+#ifndef INC_UWLMAN_ENTITY_MANAGER_TCC
+#define INC_UWLMAN_ENTITY_MANAGER_TCC
+
+#include "uwlman_entity_manager.h"
 
 #include <stdexcept>
 
@@ -39,3 +42,5 @@ std::shared_ptr<TComponent> EntityManager::getComponent(std::shared_ptr<uwlec::E
 }
 
 };
+
+#endif
