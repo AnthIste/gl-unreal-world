@@ -1,6 +1,6 @@
-#include "uwlman_input_manager.h"
+#include "oglwin_input_manager.h"
 
-namespace uwlman {
+namespace oglwin {
 
 // Used for GLFW static callback routing
 extern InputManager* InputManager::current_instance;

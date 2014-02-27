@@ -1,5 +1,5 @@
-#ifndef INC_UWLMAN_INPUT_MANAGER_H
-#define INC_UWLMAN_INPUT_MANAGER_H
+#ifndef INC_OGLWIN_INPUT_MANAGER_H
+#define INC_OGLWIN_INPUT_MANAGER_H
 
 #ifndef __GLFW_INCLUDED__
 #define __GLFW_INCLUDED__
@@ -10,14 +10,13 @@
 
 #include <memory>
 
-#include "oglwin/oglwin_window_manager.h"
+#include "oglwin_window_manager.h"
 
-// TODO: move to ogl module
-namespace uwlman {
+namespace oglwin {
 
 class InputManager {
 public:
-    InputManager(std::shared_ptr<oglwin::WindowManager> windowManager)
+    InputManager(std::shared_ptr<WindowManager> windowManager)
         : _windowManager(windowManager)
     { }
 
@@ -43,7 +42,7 @@ private:
     static void s_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 private:
-    std::shared_ptr<oglwin::WindowManager> _windowManager;
+    std::shared_ptr<WindowManager> _windowManager;
 
     bool keys[512];
     bool mouseButtons[16];

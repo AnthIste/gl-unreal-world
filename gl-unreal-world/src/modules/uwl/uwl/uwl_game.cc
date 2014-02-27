@@ -23,10 +23,10 @@ Game::Game()
     // OpenGL
     _assetManager = std::make_shared<oglres::AssetManager>(_fileSystem);
     _windowManager = std::make_shared<oglwin::WindowManager>();
+    _inputManager = std::make_shared<oglwin::InputManager>(_windowManager);
 
     // Managers
     _entityManager = std::make_shared<uwlman::EntityManager>();
-    _inputManager = std::make_shared<uwlman::InputManager>(_windowManager);
 
     // Systems
     _gameLogicSystem = std::make_shared<uwlsys::GameLogicSystem>(_entityManager);
@@ -41,8 +41,6 @@ void Game::initialize()
 {
     // Initialize OpenGL
     _windowManager->createWindow(WindowTitle, WindowWidth, WindowHeight);
-
-    // Initialize managers
     _inputManager->initialize();
 
     // Initialize systems
@@ -59,10 +57,8 @@ void Game::finalize()
     // Finalize systems
     _gameLogicSystem->finalize();
 
-    // Finalize managers
-    _inputManager->finalize();
-
     // Finalize OpenGL
+    _inputManager->finalize();
     _gfxSystem->finalize();
 
     // Finalize window
