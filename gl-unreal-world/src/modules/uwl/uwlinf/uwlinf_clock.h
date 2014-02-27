@@ -23,6 +23,8 @@ private:
 private:
     double _time;
 
+    double _elapsedTime;
+
     double _scale;
 };
 

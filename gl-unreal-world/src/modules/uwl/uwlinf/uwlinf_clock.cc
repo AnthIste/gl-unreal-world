@@ -12,6 +12,7 @@ namespace uwlinf {
 Clock::Clock()
 {
     _time = 0.0;
+    _elapsedTime = 0.0;
     _scale = 1.0;
 }
 
@@ -19,15 +20,17 @@ double Clock::tick()
 {
     double t = glfwGetTime();
     double dt = t - _time;
+    double sdt = scaledTime(dt);
 
     _time = t;
+    _elapsedTime += sdt;
 
-    return scaledTime(dt);
+    return sdt;
 }
 
 double Clock::getTime()
 {
-    return scaledTime(_time);
+    return _elapsedTime;
 }
 
 double Clock::getAbsoluteTime()

@@ -77,8 +77,19 @@ void Game::tick()
     auto t = _clock->getTime();
 
     // Process input
+    // Escape closes
     if (_inputManager->isKeyDown(256)) {
         _windowManager->closeWindow();
+    }
+
+    // T engages slow-mo
+    if (_inputManager->isKeyDown(84)) {
+        _clock->setTimeScale(2.0);
+    }
+
+    // Y engages normal time
+    if (_inputManager->isKeyDown(89)) {
+        _clock->setTimeScale(1.0);
     }
 
     // Process entity events
