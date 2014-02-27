@@ -20,13 +20,13 @@ Game::Game()
     _clock = std::make_shared<uwlinf::Clock>();
     _fileSystem = std::make_shared<uwlinf::FileSystem>();
 
-    // Managers
-    _entityManager = std::make_shared<uwlman::EntityManager>();
-    _inputManager = std::make_shared<uwlman::InputManager>();
-
     // OpenGL
     _assetManager = std::make_shared<oglres::AssetManager>(_fileSystem);
-    _windowManager = std::make_shared<oglwin::WindowManager>(_inputManager);
+    _windowManager = std::make_shared<oglwin::WindowManager>();
+
+    // Managers
+    _entityManager = std::make_shared<uwlman::EntityManager>();
+    _inputManager = std::make_shared<uwlman::InputManager>(_windowManager);
 
     // Systems
     _gameLogicSystem = std::make_shared<uwlsys::GameLogicSystem>(_entityManager);
@@ -39,8 +39,11 @@ Game::~Game()
 
 void Game::initialize()
 {
-    // Initialize window
+    // Initialize OpenGL
     _windowManager->createWindow(WindowTitle, WindowWidth, WindowHeight);
+
+    // Initialize managers
+    _inputManager->initialize();
 
     // Initialize systems
     _gfxSystem->initialize();
@@ -49,15 +52,20 @@ void Game::initialize()
     // Initialize entities
     createEntity(_entityManager, -0.5);
     createEntity(_entityManager, 0.5);
-
-    // Initialize time
-    _clock->setTimeScale(1.0);
 }
 
 void Game::finalize()
 {
+    // Finalize systems
     _gameLogicSystem->finalize();
+
+    // Finalize managers
+    _inputManager->finalize();
+
+    // Finalize OpenGL
     _gfxSystem->finalize();
+
+    // Finalize window
     _windowManager->closeWindow();
 }
 

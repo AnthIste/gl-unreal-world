@@ -1,6 +1,6 @@
 Import('env')
 
-env.Append(CXXFLAGS=['-std=c++0x'])
+env.Append(CXXFLAGS=['-std=c++0x', '--no-pretty-templates'])
 
 env.Append(CPPPATH=[
     'modules/uwl',
