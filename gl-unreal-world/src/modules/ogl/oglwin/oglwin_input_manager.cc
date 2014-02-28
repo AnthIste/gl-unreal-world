@@ -1,6 +1,6 @@
 #include "oglwin_input_manager.h"
 
-using uwlman::Message;
+using uwlinf::Message;
 
 namespace oglwin {
 

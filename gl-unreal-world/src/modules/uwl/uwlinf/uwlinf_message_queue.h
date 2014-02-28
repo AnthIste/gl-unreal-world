@@ -1,31 +1,31 @@
-#ifndef INC_UWLINF_MQ_H
-#define INC_UWLINF_MQ_H
+#ifndef INC_UWLINF_MESSAGE_QUEUE_H
+#define INC_UWLINF_MESSAGE_QUEUE_H
+
+#include "uwlinf_message_queue_base.h"
 
 #include <memory>
-#include <queue>
 
 namespace uwlinf {
 
-template <typename TMessage>
-class MessageQueue {
+struct Message {
+    Message() { }
+
+    virtual ~Message() { }
+
+    template<typename T>
+    bool is()
+    {
+        return typeid(this) == typeid(T);
+    }
+};
+
+class MessageQueue : public MessageQueueBase<Message> {
 public:
     MessageQueue();
 
     virtual ~MessageQueue() { }
-
-    virtual void postMessage(std::unique_ptr<TMessage> message);
-
-    virtual std::unique_ptr<TMessage> popMessage();
-
-    virtual bool hasMessage();
-
-private:
-    std::queue<std::unique_ptr<TMessage>> _queue;
-
 };
 
 };
-
-#include "uwlinf_message_queue.tcc"
 
 #endif

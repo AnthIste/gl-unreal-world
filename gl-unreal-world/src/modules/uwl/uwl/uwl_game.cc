@@ -19,7 +19,7 @@ Game::Game()
     // Infrastructure
     _clock = std::make_shared<uwlinf::Clock>();
     _fileSystem = std::make_shared<uwlinf::FileSystem>();
-    _messageQueue = std::make_shared<uwlman::MessageQueue>();
+    _messageQueue = std::make_shared<uwlinf::MessageQueue>();
 
     // OpenGL
     _assetManager = std::make_shared<oglres::AssetManager>(_fileSystem);

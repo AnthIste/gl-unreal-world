@@ -3,9 +3,9 @@
 
 #include "uwlman/uwlman_entity_manager.h"
 #include "uwlman/uwlman_event_manager.h"
-#include "uwlman/uwlman_message_queue.h"
 #include "uwlsys/uwlsys_game_logic_system.h"
 #include "uwlsys/uwlsys_gfx_system.h"
+#include "uwlinf/uwlinf_message_queue.h"
 #include "uwlinf/uwlinf_file_system.h"
 #include "uwlinf/uwlinf_clock.h"
 #include "oglwin/oglwin_window_manager.h"
@@ -35,11 +35,11 @@ private:
 
     std::shared_ptr<uwlman::EventManager> _eventManager;
 
-    std::shared_ptr<uwlman::MessageQueue> _messageQueue;
-
     std::shared_ptr<uwlsys::GameLogicSystem> _gameLogicSystem;
 
     std::shared_ptr<uwlsys::GfxSystem> _gfxSystem;
+
+    std::shared_ptr<uwlinf::MessageQueue> _messageQueue;
 
     std::shared_ptr<uwlinf::FileSystem> _fileSystem;
 

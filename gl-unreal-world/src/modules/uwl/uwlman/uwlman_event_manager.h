@@ -1,7 +1,7 @@
 #ifndef INC_UWLMAN_EVENT_MANAGER_H
 #define INC_UWLMAN_EVENT_MANAGER_H
 
-#include "uwlman_message_queue.h"
+#include "uwlinf/uwlinf_message_queue.h"
 
 #include <memory>
 
@@ -9,7 +9,7 @@ namespace uwlman {
 
 class EventManager {
 public:
-    EventManager(std::shared_ptr<MessageQueue> messageQueue)
+    EventManager(std::shared_ptr<uwlinf::MessageQueue> messageQueue)
         : _messageQueue(messageQueue)
     { }
 
@@ -18,7 +18,7 @@ public:
     virtual void dispatchMessages();
 
 private:
-    std::shared_ptr<MessageQueue> _messageQueue;
+    std::shared_ptr<uwlinf::MessageQueue> _messageQueue;
 
 };
 
