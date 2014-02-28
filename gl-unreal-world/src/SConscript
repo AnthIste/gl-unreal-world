@@ -1,6 +1,6 @@
 Import('env')
 
-env.Append(CXXFLAGS=['-std=c++0x', '--no-pretty-templates'])
+env.Append(CXXFLAGS=['-std=c++0x', '-g', '--no-pretty-templates'])
 
 env.Append(CPPPATH=[
     'modules/uwl',
@@ -11,6 +11,7 @@ env.Program(
     Glob('*.cc') +
     Glob('modules/uwl/uwl/*.cc') +
     Glob('modules/uwl/uwlec/*.cc') +
+    Glob('modules/uwl/uwlevt/*.cc') +
     Glob('modules/uwl/uwlinf/*.cc') +
     Glob('modules/uwl/uwlman/*.cc') +
     Glob('modules/uwl/uwlsys/*.cc') +

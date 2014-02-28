@@ -1,4 +1,5 @@
 #include "oglwin_input_manager.h"
+#include "uwlevt/commands.h"
 
 using uwlinf::Message;
 
@@ -37,12 +38,24 @@ void InputManager::key_callback(GLFWwindow* window, int key, int scancode, int a
     if (action == GLFW_PRESS) {
         keys[key] = true;
 
-        std::unique_ptr<Message> message;
-        _messageQueue->postMessage(std::move(message));
+        publishKeyCommand(key);
     }
 
     if (action == GLFW_RELEASE) {
         keys[key] = false;
+    }
+}
+
+void InputManager::publishKeyCommand(int key)
+{
+    switch (key) {
+        case GLFW_KEY_ESCAPE:
+        {
+            _messageQueue->postMessage(
+                std::unique_ptr<uwlevt::CommandExit>(new uwlevt::CommandExit())
+            );
+            break;
+        }
     }
 }
 

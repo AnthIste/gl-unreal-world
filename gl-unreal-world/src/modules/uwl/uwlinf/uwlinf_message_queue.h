@@ -4,6 +4,7 @@
 #include "uwlinf_message_queue_base.h"
 
 #include <memory>
+#include <iostream>
 
 namespace uwlinf {
 
@@ -15,16 +16,11 @@ struct Message {
     template<typename T>
     bool is()
     {
-        return typeid(this) == typeid(T);
+        return typeid(*this) == typeid(T);
     }
 };
 
-class MessageQueue : public MessageQueueBase<Message> {
-public:
-    MessageQueue();
-
-    virtual ~MessageQueue() { }
-};
+typedef MessageQueueBase<Message> MessageQueue;
 
 };
 

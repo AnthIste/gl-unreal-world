@@ -1,6 +1,8 @@
 #ifndef INC_UWL_GAME_H
 #define INC_UWL_GAME_H
 
+#include "uwlman/uwlman_message_receiver.h"
+
 #include "uwlman/uwlman_entity_manager.h"
 #include "uwlman/uwlman_event_manager.h"
 #include "uwlsys/uwlsys_game_logic_system.h"
@@ -16,19 +18,24 @@
 
 namespace uwl {
 
-class Game {
+class Game : public uwlman::MessageReceiver {
 public:
     Game();
 
     virtual ~Game();
 
-    void initialize();
+    virtual void initialize();
 
-    void finalize();
+    virtual void finalize();
 
-    bool isDone();
+    virtual bool isDone();
 
-    void tick();
+    virtual void tick();
+
+    virtual void receiveMessage(std::shared_ptr<uwlinf::Message> message);
+
+private:
+    void subscribeEvents();
 
 private:
     std::shared_ptr<uwlman::EntityManager> _entityManager;

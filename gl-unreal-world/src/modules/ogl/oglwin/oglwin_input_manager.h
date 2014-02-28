@@ -39,6 +39,8 @@ public:
 private:
     void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
+    void publishKeyCommand(int key);
+
     // ----------------------------------------------------------------------
 
     static void s_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);

@@ -2,6 +2,7 @@
 #include "uwlec/uwlec_entity.h"
 #include "uwlec/uwlec_component.h"
 #include "uwlec/uwlec_moveable.h"
+#include "uwlevt/commands.h"
 
 using uwlec::Entity;
 using uwlec::Moveable;
@@ -52,6 +53,9 @@ void Game::initialize()
     // Initialize entities
     createEntity(_entityManager, -0.5);
     createEntity(_entityManager, 0.5);
+
+    // Subscribe to events
+    subscribeEvents();
 }
 
 void Game::finalize()
@@ -82,19 +86,7 @@ void Game::tick()
     _eventManager->dispatchMessages();
 
     // Process input
-    // Escape closes
-    if (_inputManager->isKeyDown(256)) {
-        _windowManager->closeWindow();
-    }
-
-    // T engages slow-mo
-    if (_inputManager->isKeyDown(84)) {
-        _clock->setTimeScale(2.0);
-    }
-    else
-    {
-        _clock->setTimeScale(1.0);
-    }
+    _inputManager->processInput();
 
     // Process entity events
     _entityManager->processChanges();
@@ -107,6 +99,20 @@ void Game::tick()
 
     // Present to window
     _windowManager->redrawWindow();
+}
+
+void Game::receiveMessage(std::shared_ptr<uwlinf::Message> message)
+{
+    if (message->is<uwlevt::CommandExit>()) {
+        _windowManager->closeWindow();
+    }
+}
+
+void Game::subscribeEvents()
+{
+    auto thisReceiver = shared_from_this();
+
+    _eventManager->registerReceiver<uwlevt::CommandExit>(thisReceiver);
 }
 
 static void createEntity(std::shared_ptr<uwlman::EntityManager> _entityManager, double x)

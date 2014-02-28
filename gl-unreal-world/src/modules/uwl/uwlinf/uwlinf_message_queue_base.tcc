@@ -13,6 +13,10 @@ MessageQueueBase<TMessage>::MessageQueueBase()
 template <typename TMessage>
 void MessageQueueBase<TMessage>::postMessage(std::unique_ptr<TMessage> message)
 {
+    if (!message) {
+        return;
+    }
+
     _queue.push(std::move(message));
 }
 
