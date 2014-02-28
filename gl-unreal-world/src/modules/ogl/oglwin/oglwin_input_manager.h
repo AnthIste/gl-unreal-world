@@ -8,16 +8,18 @@
 #include <GLFW/glfw3.h>
 #endif
 
-#include <memory>
-
 #include "oglwin_window_manager.h"
+#include "uwlman/uwlman_message_queue.h"
+
+#include <memory>
 
 namespace oglwin {
 
 class InputManager {
 public:
-    InputManager(std::shared_ptr<WindowManager> windowManager)
-        : _windowManager(windowManager)
+    InputManager(std::shared_ptr<WindowManager> windowManager, std::shared_ptr<uwlman::MessageQueue> messageQueue)
+        : _windowManager(windowManager),
+          _messageQueue(messageQueue)
     { }
 
     virtual ~InputManager() { }
@@ -43,6 +45,8 @@ private:
 
 private:
     std::shared_ptr<WindowManager> _windowManager;
+
+    std::shared_ptr<uwlman::MessageQueue> _messageQueue;
 
     bool keys[512];
     bool mouseButtons[16];

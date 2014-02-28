@@ -2,6 +2,8 @@
 #define INC_UWL_GAME_H
 
 #include "uwlman/uwlman_entity_manager.h"
+#include "uwlman/uwlman_event_manager.h"
+#include "uwlman/uwlman_message_queue.h"
 #include "uwlsys/uwlsys_game_logic_system.h"
 #include "uwlsys/uwlsys_gfx_system.h"
 #include "uwlinf/uwlinf_file_system.h"
@@ -30,6 +32,10 @@ public:
 
 private:
     std::shared_ptr<uwlman::EntityManager> _entityManager;
+
+    std::shared_ptr<uwlman::EventManager> _eventManager;
+
+    std::shared_ptr<uwlman::MessageQueue> _messageQueue;
 
     std::shared_ptr<uwlsys::GameLogicSystem> _gameLogicSystem;
 

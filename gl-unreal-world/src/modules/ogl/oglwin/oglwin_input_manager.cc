@@ -1,5 +1,7 @@
 #include "oglwin_input_manager.h"
 
+using uwlman::Message;
+
 namespace oglwin {
 
 // Used for GLFW static callback routing
@@ -34,6 +36,9 @@ void InputManager::key_callback(GLFWwindow* window, int key, int scancode, int a
 {
     if (action == GLFW_PRESS) {
         keys[key] = true;
+
+        std::unique_ptr<Message> message;
+        _messageQueue->postMessage(std::move(message));
     }
 
     if (action == GLFW_RELEASE) {

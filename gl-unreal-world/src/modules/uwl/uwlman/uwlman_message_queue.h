@@ -3,14 +3,25 @@
 
 #include "uwlinf/uwlinf_message_queue.h"
 
+#include <memory>
+
 namespace uwlman {
 
 struct Message {
-    unsigned int type;
-    void* data;
+    Message() { }
+
+    virtual ~Message() { }
+
+    template<typename T>
+    bool is() { return typeid(this) == typeid(T); }
 };
 
-typedef uwlinf::MessageQueue<Message> MessageQueue;
+class MessageQueue : public uwlinf::MessageQueue<Message> {
+public:
+    MessageQueue();
+
+    virtual ~MessageQueue() { }
+};
 
 };
 

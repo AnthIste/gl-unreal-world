@@ -1,6 +1,7 @@
 #ifndef INC_UWLINF_MQ_H
 #define INC_UWLINF_MQ_H
 
+#include <memory>
 #include <queue>
 
 namespace uwlinf {
@@ -12,14 +13,14 @@ public:
 
     virtual ~MessageQueue() { }
 
-    virtual void postMessage(TMessage message);
+    virtual void postMessage(std::unique_ptr<TMessage> message);
 
-    virtual TMessage popMessage();
+    virtual std::unique_ptr<TMessage> popMessage();
 
     virtual bool hasMessage();
 
 private:
-    std::queue<TMessage> _queue;
+    std::queue<std::unique_ptr<TMessage>> _queue;
 
 };
 

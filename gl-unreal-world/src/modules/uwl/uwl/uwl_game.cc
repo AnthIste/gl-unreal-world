@@ -19,14 +19,16 @@ Game::Game()
     // Infrastructure
     _clock = std::make_shared<uwlinf::Clock>();
     _fileSystem = std::make_shared<uwlinf::FileSystem>();
+    _messageQueue = std::make_shared<uwlman::MessageQueue>();
 
     // OpenGL
     _assetManager = std::make_shared<oglres::AssetManager>(_fileSystem);
     _windowManager = std::make_shared<oglwin::WindowManager>();
-    _inputManager = std::make_shared<oglwin::InputManager>(_windowManager);
+    _inputManager = std::make_shared<oglwin::InputManager>(_windowManager, _messageQueue);
 
     // Managers
     _entityManager = std::make_shared<uwlman::EntityManager>();
+    _eventManager = std::make_shared<uwlman::EventManager>(_messageQueue);
 
     // Systems
     _gameLogicSystem = std::make_shared<uwlsys::GameLogicSystem>(_entityManager);
@@ -76,6 +78,9 @@ void Game::tick()
     auto dt = _clock->tick();
     auto t = _clock->getTime();
 
+    // Handle events
+    _eventManager->dispatchMessages();
+
     // Process input
     // Escape closes
     if (_inputManager->isKeyDown(256)) {
@@ -86,9 +91,8 @@ void Game::tick()
     if (_inputManager->isKeyDown(84)) {
         _clock->setTimeScale(2.0);
     }
-
-    // Y engages normal time
-    if (_inputManager->isKeyDown(89)) {
+    else
+    {
         _clock->setTimeScale(1.0);
     }
 

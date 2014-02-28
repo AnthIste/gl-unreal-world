@@ -11,15 +11,18 @@ MessageQueue<TMessage>::MessageQueue()
 }
 
 template <typename TMessage>
-void MessageQueue<TMessage>::postMessage(TMessage message)
+void MessageQueue<TMessage>::postMessage(std::unique_ptr<TMessage> message)
 {
-    _queue.push(message);
+    _queue.push(std::move(message));
 }
 
 template <typename TMessage>
-TMessage MessageQueue<TMessage>::popMessage()
+std::unique_ptr<TMessage> MessageQueue<TMessage>::popMessage()
 {
-    return _queue.pop();
+    auto front = std::move(_queue.front());
+    _queue.pop();
+
+    return front;
 }
 
 template <typename TMessage>
