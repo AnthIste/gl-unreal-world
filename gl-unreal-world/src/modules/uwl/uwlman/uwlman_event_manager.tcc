@@ -3,7 +3,9 @@
 
 #include "uwlman_event_manager.h"
 
-#include <iostream>
+#include <log4cxx/logger.h>
+
+using namespace log4cxx;
 
 namespace uwlman {
 
@@ -13,9 +15,8 @@ void EventManager::registerReceiver(std::shared_ptr<uwlman::MessageReceiver> rec
     auto key = typeid(TMessage).hash_code();
     _messageMap[key].insert(receiver);
 
-    std::cout << "Registering receiver: "
-              << key
-              << std::endl;
+    LOG4CXX_DEBUG(Logger::getRootLogger(), "Registering receiver: "
+                                           << " (" << typeid(TMessage).name() << ")");
 }
 
 };

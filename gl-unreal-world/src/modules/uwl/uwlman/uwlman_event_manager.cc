@@ -1,6 +1,8 @@
 #include "uwlman_event_manager.h"
 
-#include <iostream>
+#include <log4cxx/logger.h>
+
+using namespace log4cxx;
 
 namespace uwlman {
 
@@ -12,9 +14,8 @@ void EventManager::dispatchMessages()
 
         auto receivers = _messageMap[key];
 
-        std::cout << "Dispatching message: "
-                  << key
-                  << std::endl;
+        LOG4CXX_DEBUG(Logger::getRootLogger(), "Dispatching message: "
+                                               << " (" << typeid(*message).name() << ")");
 
         if (receivers.empty()) {
             return;
