@@ -45,7 +45,7 @@ void Clock::setTimeScale(double scale)
 
 double Clock::scaledTime(double time)
 {
-    return time / _scale;
+    return time * _scale;
 }
 
 };

@@ -41,11 +41,11 @@ public:
 private:
     void subscribeEvents();
 
-    void moveEntity(std::shared_ptr<uwlec::Entity> entity);
+    void moveEntity(double dt, std::shared_ptr<uwlec::Entity> entity);
 
-    void applyGravity(std::shared_ptr<uwlec::Entity> entity);
+    void applyGravity(double dt, std::shared_ptr<uwlec::Entity> entity);
 
-    void detectCollisions(std::shared_ptr<uwlec::Entity> entity);
+    void detectCollisions(double dt, std::shared_ptr<uwlec::Entity> entity);
 
     void movePC();
 

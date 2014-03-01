@@ -2,7 +2,10 @@
 #include "uwlec/uwlec_moveable.h"
 #include "uwlevt/commands.h"
 
+#include <log4cxx/logger.h>
 #include <cmath>
+
+using namespace log4cxx;
 
 using uwlec::Entity;
 using uwlec::Moveable;
@@ -12,8 +15,10 @@ using uwlsys::KeyMap;
 
 namespace uwlsys {
 
-const double Gravity = -0.000000035;
+const double Gravity = -0.115;
 const double Bounciness = 0.7;
+const double ThrowStrength = 0.04;
+const double JitterThreshold = 0.013;
 
 void GameLogicSystem::initialize()
 {
@@ -39,9 +44,9 @@ void GameLogicSystem::tick(double t, double dt)
     EntityManager::EntitySet allEntities = entityManager()->allEntities();
 
     for (auto entity : allEntities) {
-        moveEntity(entity);
-        applyGravity(entity);
-        detectCollisions(entity);
+        moveEntity(dt, entity);
+        applyGravity(dt, entity);
+        detectCollisions(dt, entity);
     }
 }
 
@@ -69,7 +74,7 @@ void GameLogicSystem::subscribeEvents()
     _eventManager->registerReceiver<uwlevt::CommandThrow>(thisReceiver);
 }
 
-void GameLogicSystem::moveEntity(std::shared_ptr<uwlec::Entity> entity)
+void GameLogicSystem::moveEntity(double dt, std::shared_ptr<uwlec::Entity> entity)
 {
     auto m = entityManager()->getComponent<Moveable>(entity);
 
@@ -80,26 +85,28 @@ void GameLogicSystem::moveEntity(std::shared_ptr<uwlec::Entity> entity)
     }
 }
 
-void GameLogicSystem::applyGravity(std::shared_ptr<uwlec::Entity> entity)
+void GameLogicSystem::applyGravity(double dt, std::shared_ptr<uwlec::Entity> entity)
 {
     auto m = entityManager()->getComponent<Moveable>(entity);
 
     if (m != nullptr) {
-        m->dy += Gravity;
+        m->dy += Gravity * dt;
     }
 }
 
-void GameLogicSystem::detectCollisions(std::shared_ptr<uwlec::Entity> entity)
+void GameLogicSystem::detectCollisions(double dt, std::shared_ptr<uwlec::Entity> entity)
 {
     auto m = entityManager()->getComponent<Moveable>(entity);
 
     if (m->y < -1.0) {
         m->y = -1.0;
 
-        if (std::abs(m->dy) > 2.92426e-05) {
+        if (std::abs(m->dy) > JitterThreshold) {
             m->dy = -(m->dy) * Bounciness;
         }
         else {
+            LOG4CXX_DEBUG(Logger::getRootLogger(), "uwlsys::GameLogicSystem - "
+                << "Jitter");
             m->dy = 0;
         }
     }
@@ -130,7 +137,7 @@ void GameLogicSystem::movePC()
 
 void GameLogicSystem::throwPC()
 {
-    entityManager()->getComponent<Moveable>(_pc)->dy += 0.0002;
+    entityManager()->getComponent<Moveable>(_pc)->dy += ThrowStrength;
 }
 
 };

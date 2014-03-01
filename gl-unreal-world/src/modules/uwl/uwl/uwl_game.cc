@@ -4,16 +4,23 @@
 #include "uwlec/uwlec_moveable.h"
 #include "uwlevt/commands.h"
 
+#include <cmath>
+
 namespace uwl {
 
 const char* WindowTitle = "The Unreal World";
 const int WindowWidth = 640;
 const int WindowHeight = 640;
 
+// Simulation timestep
+const double fps = 60.0;
+const double dt = 1.0 / fps;
+
 Game::Game()
 {
     // Infrastructure
     _clock = std::make_shared<uwlinf::Clock>();
+    _timeStep = std::make_shared<uwlinf::TimeStep>(_clock, dt);
     _fileSystem = std::make_shared<uwlinf::FileSystem>();
     _messageQueue = std::make_shared<uwlinf::MessageQueue>();
 
@@ -39,6 +46,8 @@ Game::~Game()
 
 void Game::initialize()
 {
+    _clock->setTimeScale(1.1);
+
     // Initialize OpenGL
     _windowManager->createWindow(WindowTitle, WindowWidth, WindowHeight);
     _inputManager->initialize();
@@ -72,19 +81,24 @@ bool Game::isDone()
 void Game::tick()
 {
     // Proceed time
-    auto dt = _clock->tick();
-    auto t = _clock->getTime();
+    _timeStep->tick();
 
     // Handle events
     _eventManager->dispatchMessages();
     _entityManager->processChanges();
 
-    // Update systems
-    _inputSystem->tick(t, dt);
-    _gameLogicSystem->tick(t, dt);
-    _gfxSystem->tick(t, dt);
+    // Update simulation
+    while (_timeStep->hasTime()) {
+        _inputSystem->tick(_timeStep->t(), _timeStep->dt());
+        _gameLogicSystem->tick(_timeStep->t(), _timeStep->dt());
 
-    // Present to window
+        _timeStep->consumeTime();
+    }
+
+    // Optional: use time alpha value interpolation
+
+    // Render
+    _gfxSystem->tick(_timeStep->t(), _timeStep->dt());
     _windowManager->redrawWindow();
 }
 

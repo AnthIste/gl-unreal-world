@@ -12,6 +12,7 @@
 #include "uwlinf/uwlinf_message_queue.h"
 #include "uwlinf/uwlinf_file_system.h"
 #include "uwlinf/uwlinf_clock.h"
+#include "uwlinf/uwlinf_timestep.h"
 #include "oglwin/oglwin_window_manager.h"
 #include "oglwin/oglwin_input_manager.h"
 #include "oglres/oglres_asset_manager.h"
@@ -57,6 +58,8 @@ private:
     std::shared_ptr<uwlinf::FileSystem> _fileSystem;
 
     std::shared_ptr<uwlinf::Clock> _clock;
+
+    std::shared_ptr<uwlinf::TimeStep> _timeStep;
 
     std::shared_ptr<oglwin::WindowManager> _windowManager;
 

@@ -3,13 +3,16 @@ project (gl-unreal-world)
 find_package(PkgConfig REQUIRED)
 
 # configure packages
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
-find_package(Log4Cxx REQUIRED)
+set (CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+find_package (Log4Cxx REQUIRED)
 
 include_directories (${LOG4CXX_INCLUDE_DIR})
 
 # configure for C++11
-ADD_DEFINITIONS("-std=c++0x")
+add_definitions ("-std=c++0x")
+
+# configure debugging and profiling
+set (CMAKE_CXX_FLAGS "-O3 -g --no-pretty-templates")
 
 # add the OpenGL library
 include_directories ("${PROJECT_SOURCE_DIR}/src/modules/ogl")
