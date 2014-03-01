@@ -1,7 +1,9 @@
 #include "uwlsys_input_system.h"
 #include "uwlevt/commands.h"
 
-#include <iostream>
+#include <log4cxx/logger.h>
+
+using namespace log4cxx;
 
 using uwlinf::Message;
 
@@ -9,11 +11,17 @@ namespace uwlsys {
 
 void InputSystem::initialize()
 {
+    LOG4CXX_DEBUG(Logger::getRootLogger(), "uwlsys::InputSystem - "
+        << "Setting key receiver to this");
+
     _inputManager->setKeyReceiver(shared_from_this());
 }
 
 void InputSystem::finalize()
 {
+    LOG4CXX_DEBUG(Logger::getRootLogger(), "uwlsys::InputSystem - "
+        << "Clearing key receiver");
+
     _inputManager->clearKeyReceiver();
 }
 

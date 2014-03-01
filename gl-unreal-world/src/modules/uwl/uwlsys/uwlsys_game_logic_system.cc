@@ -17,6 +17,9 @@ const double Bounciness = 0.7;
 
 void GameLogicSystem::initialize()
 {
+    LOG4CXX_DEBUG(Logger::getRootLogger(), "uwlsys::GameLogicSystem - "
+        << "Creating Player Character entity");
+
     // Create Player Character (PC)
     _pc = _entityFactory->createEntity(EntityType::Wooter, 0.0, 0.0);
 
@@ -42,6 +45,10 @@ void GameLogicSystem::tick(double t, double dt)
 
 void GameLogicSystem::receiveMessage(std::shared_ptr<uwlinf::Message> message)
 {
+    LOG4CXX_DEBUG(Logger::getRootLogger(), "uwlsys::GameLogicSystem - "
+        << "Event received: "
+        << typeid(*message).name());
+
     if (message->is<uwlevt::CommandThrow>()) {
         throwPC();
     }
@@ -49,6 +56,9 @@ void GameLogicSystem::receiveMessage(std::shared_ptr<uwlinf::Message> message)
 
 void GameLogicSystem::subscribeEvents()
 {
+    LOG4CXX_DEBUG(Logger::getRootLogger(), "uwlsys::GameLogicSystem - "
+        << "Subscribing to events");
+
     auto thisReceiver = shared_from_this();
 
     _eventManager->registerReceiver<uwlevt::CommandThrow>(thisReceiver);

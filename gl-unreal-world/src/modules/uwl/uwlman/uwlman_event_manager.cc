@@ -14,12 +14,17 @@ void EventManager::dispatchMessages()
 
         auto receivers = _messageMap[key];
 
-        LOG4CXX_DEBUG(Logger::getRootLogger(), "Dispatching message: "
-                                               << " (" << typeid(*message).name() << ")");
-
         if (receivers.empty()) {
+            LOG4CXX_WARN(Logger::getRootLogger(), "uwlman::EventManager - "
+                << "No receivers registered for message"
+                << typeid(*message).name());
+
             return;
         }
+
+        LOG4CXX_DEBUG(Logger::getRootLogger(), "uwlman::EventManager - "
+            << "Dispatching message to " << receivers.size() << " receivers: "
+            << typeid(*message).name());
 
         std::shared_ptr<uwlinf::Message> messageToDispatch(message.release());
 

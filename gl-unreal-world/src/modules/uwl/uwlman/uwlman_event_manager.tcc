@@ -15,8 +15,9 @@ void EventManager::registerReceiver(std::shared_ptr<uwlman::MessageReceiver> rec
     auto key = typeid(TMessage).hash_code();
     _messageMap[key].insert(receiver);
 
-    LOG4CXX_DEBUG(Logger::getRootLogger(), "Registering receiver: "
-                                           << " (" << typeid(TMessage).name() << ")");
+    LOG4CXX_DEBUG(Logger::getRootLogger(), "uwlman::EventManager - "
+        << "Registering receiver for "
+        << typeid(TMessage).name());
 }
 
 };
