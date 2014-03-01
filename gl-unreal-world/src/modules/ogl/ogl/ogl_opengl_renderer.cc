@@ -51,6 +51,12 @@ void OpenGLRenderer::set_uniform_2f(GLuint shaderProgram, std::string uniform, G
     glUniform2f(uniformLocation, x, y);
 }
 
+void OpenGLRenderer::set_uniform_4f(GLuint shaderProgram, std::string uniform, GLfloat m, GLfloat x, GLfloat y, GLfloat z)
+{
+    GLuint uniformLocation = glGetUniformLocation(shaderProgram, uniform.c_str());
+    glUniform4f(uniformLocation, m, x, y, z);
+}
+
 GLuint OpenGLRenderer::create_vbo()
 {
     GLuint bufferObject;

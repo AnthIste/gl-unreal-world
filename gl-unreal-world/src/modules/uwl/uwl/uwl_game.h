@@ -4,6 +4,7 @@
 #include "uwlman/uwlman_message_receiver.h"
 
 #include "uwlman/uwlman_entity_manager.h"
+#include "uwlman/uwlman_entity_factory.h"
 #include "uwlman/uwlman_event_manager.h"
 #include "uwlsys/uwlsys_game_logic_system.h"
 #include "uwlsys/uwlsys_gfx_system.h"
@@ -39,6 +40,8 @@ private:
 
 private:
     std::shared_ptr<uwlman::EntityManager> _entityManager;
+
+    std::shared_ptr<uwlman::EntityFactory> _entityFactory;
 
     std::shared_ptr<uwlman::EventManager> _eventManager;
 

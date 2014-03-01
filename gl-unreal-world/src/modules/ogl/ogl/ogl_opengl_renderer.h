@@ -28,6 +28,8 @@ public:
 
     void set_uniform_2f(GLuint shaderProgram, std::string uniform, GLfloat x, GLfloat y);
 
+    void set_uniform_4f(GLuint shaderProgram, std::string uniform, GLfloat m, GLfloat x, GLfloat y, GLfloat z);
+
     void render_clear_frame();
 
     void render_triangles(GLuint vbo, int nTriangles);

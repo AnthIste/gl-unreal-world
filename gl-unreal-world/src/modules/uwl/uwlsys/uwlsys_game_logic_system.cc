@@ -25,7 +25,7 @@ void GameLogicSystem::tick(double t, double dt)
         auto m = _entityManager->getComponent<Moveable>(entity);
 
         if (m != nullptr) {
-            auto y = sin(t);
+            auto y = sin(t * m->dy);
             m->y = y;
         }
     }

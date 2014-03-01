@@ -4,16 +4,13 @@
 #include "uwlec/uwlec_moveable.h"
 #include "uwlevt/commands.h"
 
-using uwlec::Entity;
-using uwlec::Moveable;
+using uwlman::EntityType;
 
 namespace uwl {
 
 const char* WindowTitle = "The Unreal World";
 const int WindowWidth = 640;
 const int WindowHeight = 640;
-
-static void createEntity(std::shared_ptr<uwlman::EntityManager> _entityManager, double x);
 
 Game::Game()
 {
@@ -29,6 +26,7 @@ Game::Game()
 
     // Managers
     _entityManager = std::make_shared<uwlman::EntityManager>();
+    _entityFactory = std::make_shared<uwlman::EntityFactory>(_entityManager);
     _eventManager = std::make_shared<uwlman::EventManager>(_messageQueue);
 
     // Systems
@@ -51,8 +49,8 @@ void Game::initialize()
     _gameLogicSystem->initialize();
 
     // Initialize entities
-    createEntity(_entityManager, -0.5);
-    createEntity(_entityManager, 0.5);
+    _entityFactory->createEntity(EntityType::Wooter, -0.5, 0.0);
+    _entityFactory->createEntity(EntityType::Guzzler, 0.5, 0.0);
 
     // Subscribe to events
     subscribeEvents();
@@ -113,17 +111,6 @@ void Game::subscribeEvents()
     auto thisReceiver = shared_from_this();
 
     _eventManager->registerReceiver<uwlevt::CommandExit>(thisReceiver);
-}
-
-static void createEntity(std::shared_ptr<uwlman::EntityManager> _entityManager, double x)
-{
-    auto shipEntity = std::make_shared<Entity>();
-    auto moveableComponent = std::make_shared<Moveable>();
-
-    moveableComponent->x = x;
-
-    _entityManager->registerEntity(shipEntity);
-    _entityManager->addComponent<Moveable>(shipEntity, moveableComponent);
 }
 
 };
