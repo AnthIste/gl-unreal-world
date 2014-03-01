@@ -30,7 +30,11 @@ std::shared_ptr<Entity> EntityFactory::createGuzzler(double x, double y)
 
     moveableComponent->x = x;
     moveableComponent->y = y;
-    moveableComponent->dy = 0.5;
+    moveableComponent->z = 0.0;
+
+    moveableComponent->dx = 0.0;
+    moveableComponent->dy = 0.0;
+    moveableComponent->dz = 0.0;
 
     renderableComponent->color = 0xFFFF0000;
     renderableComponent->scale = 1.0;
@@ -50,7 +54,11 @@ std::shared_ptr<Entity> EntityFactory::createWooter(double x, double y)
 
     moveableComponent->x = x;
     moveableComponent->y = y;
-    moveableComponent->dy = 1.1;
+    moveableComponent->z = 0.0;
+
+    moveableComponent->dx = 0.0;
+    moveableComponent->dy = 0.0;
+    moveableComponent->dz = 0.0;
 
     renderableComponent->color = 0xFF00FF00;
     renderableComponent->scale = 0.5;

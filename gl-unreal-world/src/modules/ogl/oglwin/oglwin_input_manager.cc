@@ -23,7 +23,6 @@ void InputManager::processInput()
 {
 }
 
-// TODO: transparent key API
 bool InputManager::isKeyDown(int key)
 {
     if (key < 0 || key >= 512) {
@@ -33,8 +32,22 @@ bool InputManager::isKeyDown(int key)
     return keys[key];
 }
 
+void InputManager::setKeyReceiver(std::shared_ptr<KeyReceiver> receiver)
+{
+    _keyReceiver = receiver;
+}
+
+void InputManager::clearKeyReceiver()
+{
+    _keyReceiver = nullptr;
+}
+
 void InputManager::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+    if (_keyReceiver != nullptr) {
+        _keyReceiver->processKeyEvent(key, scancode, action, mods);
+    }
+
     if (action == GLFW_PRESS) {
         keys[key] = true;
 

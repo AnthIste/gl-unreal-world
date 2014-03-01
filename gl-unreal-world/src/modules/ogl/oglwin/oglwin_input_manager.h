@@ -15,6 +15,12 @@
 
 namespace oglwin {
 
+class KeyReceiver {
+public:
+    virtual ~KeyReceiver() { }
+    virtual void processKeyEvent(int key, int scancode, int action, int mods) = 0;
+};
+
 class InputManager {
 public:
     InputManager(std::shared_ptr<WindowManager> windowManager, std::shared_ptr<uwlinf::MessageQueue> messageQueue)
@@ -30,8 +36,11 @@ public:
 
     virtual void processInput();
 
-    // TODO: transparent mouse API
     virtual bool isKeyDown(int key);
+
+    virtual void setKeyReceiver(std::shared_ptr<KeyReceiver> receiver);
+
+    virtual void clearKeyReceiver();
 
 public:
     static InputManager* current_instance;
@@ -49,6 +58,8 @@ private:
     std::shared_ptr<WindowManager> _windowManager;
 
     std::shared_ptr<uwlinf::MessageQueue> _messageQueue;
+
+    std::shared_ptr<KeyReceiver> _keyReceiver;
 
     bool keys[512];
     bool mouseButtons[16];

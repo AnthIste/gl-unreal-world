@@ -4,15 +4,20 @@
 #include "uwlsys_system.h"
 #include "uwlman/uwlman_entity_manager.h"
 #include "uwlman/uwlman_entity_factory.h"
+#include "uwlsys/uwlsys_input_system.h"
 
 namespace uwlsys {
 
 class GameLogicSystem : public uwlsys::System {
 public:
-    GameLogicSystem(std::shared_ptr<uwlman::EntityManager> entityManager, std::shared_ptr<uwlman::EntityFactory> entityFactory)
-        : uwlsys::System(entityManager),
-          _entityManager(entityManager),
-          _entityFactory(entityFactory)
+    GameLogicSystem(
+        std::shared_ptr<uwlman::EntityManager> entityManager,
+        std::shared_ptr<uwlman::EntityFactory> entityFactory,
+        std::shared_ptr<uwlsys::InputSystem> inputSystem)
+    :
+        uwlsys::System(entityManager),
+        _entityFactory(entityFactory),
+        _inputSystem(inputSystem)
     { }
 
     virtual ~GameLogicSystem() { }
@@ -24,9 +29,14 @@ public:
     virtual void tick(double t, double dt);
 
 private:
-    std::shared_ptr<uwlman::EntityManager> _entityManager;
+    void moveEntity(std::shared_ptr<uwlec::Entity> entity);
 
+private:
     std::shared_ptr<uwlman::EntityFactory> _entityFactory;
+
+    std::shared_ptr<uwlsys::InputSystem> _inputSystem;
+
+    std::shared_ptr<uwlec::Entity> _pc;
 
 };
 

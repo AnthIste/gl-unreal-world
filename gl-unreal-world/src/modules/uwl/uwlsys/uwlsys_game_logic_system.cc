@@ -12,6 +12,8 @@ namespace uwlsys {
 
 void GameLogicSystem::initialize()
 {
+    // Create Player Character (PC)
+    _pc = _entityFactory->createEntity(EntityType::Wooter, 0.0, 0.0);
 }
 
 void GameLogicSystem::finalize()
@@ -20,22 +22,21 @@ void GameLogicSystem::finalize()
 
 void GameLogicSystem::tick(double t, double dt)
 {
-    EntityManager::EntitySet allEntities = _entityManager->allEntities();
-    std::shared_ptr<Entity> toRemove;
+    EntityManager::EntitySet allEntities = entityManager()->allEntities();
 
     for (auto entity : allEntities) {
-        auto m = _entityManager->getComponent<Moveable>(entity);
-
-        if (m != nullptr) {
-            auto y = sin(t * m->dy);
-            m->y = y;
-        }
-
-        toRemove = entity;
+        moveEntity(entity);
     }
+}
 
-    if (t > 5.0 && allEntities.size() == 2) {
-        _entityFactory->createEntity(EntityType::Wooter, 0.0, 0.0);
+void GameLogicSystem::moveEntity(std::shared_ptr<uwlec::Entity> entity)
+{
+    auto m = entityManager()->getComponent<Moveable>(entity);
+
+    if (m != nullptr) {
+        m->x += m->dx;
+        m->y += m->dy;
+        m->z += m->dz;
     }
 }
 

@@ -4,8 +4,6 @@
 #include "uwlec/uwlec_moveable.h"
 #include "uwlevt/commands.h"
 
-using uwlman::EntityType;
-
 namespace uwl {
 
 const char* WindowTitle = "The Unreal World";
@@ -30,7 +28,8 @@ Game::Game()
     _eventManager = std::make_shared<uwlman::EventManager>(_messageQueue);
 
     // Systems
-    _gameLogicSystem = std::make_shared<uwlsys::GameLogicSystem>(_entityManager, _entityFactory);
+    _inputSystem = std::make_shared<uwlsys::InputSystem>(_entityManager, _inputManager, _messageQueue);
+    _gameLogicSystem = std::make_shared<uwlsys::GameLogicSystem>(_entityManager, _entityFactory, _inputSystem);
     _gfxSystem = std::make_shared<uwlsys::GfxSystem>(_entityManager, _assetManager);
 }
 
@@ -45,12 +44,9 @@ void Game::initialize()
     _inputManager->initialize();
 
     // Initialize systems
+    _inputSystem->initialize();
     _gfxSystem->initialize();
     _gameLogicSystem->initialize();
-
-    // Initialize entities
-    _entityFactory->createEntity(EntityType::Guzzler, 0.5, 0.0);
-    _entityFactory->createEntity(EntityType::Wooter, -0.5, 0.0);
 
     // Subscribe to events
     subscribeEvents();
