@@ -9,7 +9,6 @@
 #endif
 
 #include "oglwin_window_manager.h"
-#include "uwlinf/uwlinf_message_queue.h"
 
 #include <memory>
 
@@ -23,9 +22,8 @@ public:
 
 class InputManager {
 public:
-    InputManager(std::shared_ptr<WindowManager> windowManager, std::shared_ptr<uwlinf::MessageQueue> messageQueue)
-        : _windowManager(windowManager),
-          _messageQueue(messageQueue)
+    InputManager(std::shared_ptr<WindowManager> windowManager)
+        : _windowManager(windowManager)
     { }
 
     virtual ~InputManager() { }
@@ -33,10 +31,6 @@ public:
     virtual void initialize();
 
     virtual void finalize();
-
-    virtual void processInput();
-
-    virtual bool isKeyDown(int key);
 
     virtual void setKeyReceiver(std::shared_ptr<KeyReceiver> receiver);
 
@@ -47,23 +41,12 @@ public:
 
 private:
     void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
-
-    void publishKeyCommand(int key);
-
-    // ----------------------------------------------------------------------
-
     static void s_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 private:
     std::shared_ptr<WindowManager> _windowManager;
 
-    std::shared_ptr<uwlinf::MessageQueue> _messageQueue;
-
     std::shared_ptr<KeyReceiver> _keyReceiver;
-
-    bool keys[512];
-    bool mouseButtons[16];
-    int modifiers;
 
 };
 

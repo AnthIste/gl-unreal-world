@@ -20,7 +20,7 @@ Game::Game()
     // OpenGL
     _assetManager = std::make_shared<oglres::AssetManager>(_fileSystem);
     _windowManager = std::make_shared<oglwin::WindowManager>();
-    _inputManager = std::make_shared<oglwin::InputManager>(_windowManager, _messageQueue);
+    _inputManager = std::make_shared<oglwin::InputManager>(_windowManager);
 
     // Managers
     _entityManager = std::make_shared<uwlman::EntityManager>();
@@ -56,12 +56,11 @@ void Game::finalize()
 {
     // Finalize systems
     _gameLogicSystem->finalize();
+    _gfxSystem->finalize();
+    _inputSystem->finalize();
 
     // Finalize OpenGL
     _inputManager->finalize();
-    _gfxSystem->finalize();
-
-    // Finalize window
     _windowManager->closeWindow();
 }
 
@@ -78,17 +77,11 @@ void Game::tick()
 
     // Handle events
     _eventManager->dispatchMessages();
-
-    // Process input
-    _inputManager->processInput();
-
-    // Process entity events
     _entityManager->processChanges();
 
-    // Update game logic
+    // Update systems
+    _inputSystem->tick(t, dt);
     _gameLogicSystem->tick(t, dt);
-
-    // Update GFX
     _gfxSystem->tick(t, dt);
 
     // Present to window
