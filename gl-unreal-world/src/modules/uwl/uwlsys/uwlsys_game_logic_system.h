@@ -31,6 +31,12 @@ public:
 private:
     void moveEntity(std::shared_ptr<uwlec::Entity> entity);
 
+    void applyGravity(std::shared_ptr<uwlec::Entity> entity);
+
+    void detectCollisions(std::shared_ptr<uwlec::Entity> entity);
+
+    void movePC();
+
 private:
     std::shared_ptr<uwlman::EntityFactory> _entityFactory;
 

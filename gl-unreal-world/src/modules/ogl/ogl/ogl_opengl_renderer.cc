@@ -62,9 +62,9 @@ GLuint OpenGLRenderer::create_vbo()
     GLuint bufferObject;
     const float vertexData[] = {
         // Triangle data:
-        0.0f,    0.5f, 0.0f, 1.0f, // (Vec4)
-        0.5f, -0.366f, 0.0f, 1.0f, // (Vec4)
-        -0.5f, -0.366f, 0.0f, 1.0f, // (Vec4)
+        0.0f,    0.1f, 0.0f, 1.0f, // (Vec4)
+        0.1f, -0.0732f, 0.0f, 1.0f, // (Vec4)
+        -0.1f, -0.0732f, 0.0f, 1.0f, // (Vec4)
 
         // Color data:
         1.0f,    0.0f, 0.0f, 1.0f, // (Vec4)
