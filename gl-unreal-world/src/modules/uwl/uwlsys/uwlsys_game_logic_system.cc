@@ -18,12 +18,15 @@ const double Bounciness = 0.7;
 void GameLogicSystem::initialize()
 {
     LOG4CXX_DEBUG(Logger::getRootLogger(), "uwlsys::GameLogicSystem - "
+        << "Initializing random number generator");
+
+    _random.seed(std::mt19937_64::default_seed);
+
+    LOG4CXX_DEBUG(Logger::getRootLogger(), "uwlsys::GameLogicSystem - "
         << "Creating Player Character entity");
 
-    // Create Player Character (PC)
     _pc = _entityFactory->createEntity(EntityType::Wooter, 0.0, 0.0);
 
-    // Subscribe to events
     subscribeEvents();
 }
 
@@ -37,10 +40,9 @@ void GameLogicSystem::tick(double t, double dt)
 
     for (auto entity : allEntities) {
         moveEntity(entity);
+        applyGravity(entity);
+        detectCollisions(entity);
     }
-
-    applyGravity(_pc);
-    detectCollisions(_pc);
 }
 
 void GameLogicSystem::receiveMessage(std::shared_ptr<uwlinf::Message> message)
@@ -51,6 +53,9 @@ void GameLogicSystem::receiveMessage(std::shared_ptr<uwlinf::Message> message)
 
     if (message->is<uwlevt::CommandThrow>()) {
         throwPC();
+
+        auto n = (_random() % 1000) / 1000.0;
+        _entityFactory->createEntity(EntityType::Guzzler, n, 0.0);
     }
 }
 

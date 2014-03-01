@@ -8,6 +8,8 @@
 #include "uwlman/uwlman_message_receiver.h"
 #include "uwlsys/uwlsys_input_system.h"
 
+#include <random>
+
 namespace uwlsys {
 
 class GameLogicSystem : public uwlsys::System,
@@ -58,6 +60,7 @@ private:
 
     std::shared_ptr<uwlec::Entity> _pc;
 
+    std::mt19937_64 _random;
 };
 
 };
