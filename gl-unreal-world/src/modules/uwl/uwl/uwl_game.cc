@@ -29,7 +29,7 @@ Game::Game()
 
     // Systems
     _inputSystem = std::make_shared<uwlsys::InputSystem>(_entityManager, _inputManager, _messageQueue);
-    _gameLogicSystem = std::make_shared<uwlsys::GameLogicSystem>(_entityManager, _entityFactory, _inputSystem);
+    _gameLogicSystem = std::make_shared<uwlsys::GameLogicSystem>(_entityManager, _entityFactory, _eventManager, _inputSystem);
     _gfxSystem = std::make_shared<uwlsys::GfxSystem>(_entityManager, _assetManager);
 }
 

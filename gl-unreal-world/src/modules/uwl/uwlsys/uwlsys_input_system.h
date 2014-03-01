@@ -12,6 +12,8 @@ enum KeyMap {
     MoveBackward = GLFW_KEY_S,
     MoveLeft = GLFW_KEY_A,
     MoveRight = GLFW_KEY_D,
+    Throw = GLFW_KEY_SPACE,
+    Exit = GLFW_KEY_ESCAPE,
 };
 
 class InputSystem : public uwlsys::System,
@@ -40,7 +42,7 @@ public:
 
     virtual void tick(double t, double dt);
 
-    void processKeyEvent(int key, int scancode, int action, int mods);
+    virtual void processKeyEvent(int key, int scancode, int action, int mods);
 
 private:
     void publishKeyCommand(int key);

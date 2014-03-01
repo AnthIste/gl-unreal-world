@@ -1,6 +1,8 @@
 #include "uwlsys_input_system.h"
 #include "uwlevt/commands.h"
 
+#include <iostream>
+
 using uwlinf::Message;
 
 namespace uwlsys {
@@ -44,10 +46,18 @@ void InputSystem::processKeyEvent(int key, int scancode, int action, int mods)
 void InputSystem::publishKeyCommand(int key)
 {
     switch (key) {
-        case GLFW_KEY_ESCAPE:
+        case Exit:
         {
             _messageQueue->postMessage(
                 std::unique_ptr<uwlevt::CommandExit>(new uwlevt::CommandExit())
+            );
+            break;
+        }
+
+        case Throw:
+        {
+            _messageQueue->postMessage(
+                std::unique_ptr<uwlevt::CommandThrow>(new uwlevt::CommandThrow())
             );
             break;
         }

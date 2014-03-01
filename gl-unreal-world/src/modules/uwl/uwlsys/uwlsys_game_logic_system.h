@@ -4,19 +4,25 @@
 #include "uwlsys_system.h"
 #include "uwlman/uwlman_entity_manager.h"
 #include "uwlman/uwlman_entity_factory.h"
+#include "uwlman/uwlman_event_manager.h"
+#include "uwlman/uwlman_message_receiver.h"
 #include "uwlsys/uwlsys_input_system.h"
 
 namespace uwlsys {
 
-class GameLogicSystem : public uwlsys::System {
+class GameLogicSystem : public uwlsys::System,
+                        public uwlman::MessageReceiver {
 public:
     GameLogicSystem(
         std::shared_ptr<uwlman::EntityManager> entityManager,
         std::shared_ptr<uwlman::EntityFactory> entityFactory,
+        std::shared_ptr<uwlman::EventManager> eventManager,
         std::shared_ptr<uwlsys::InputSystem> inputSystem)
     :
         uwlsys::System(entityManager),
+        uwlman::MessageReceiver(),
         _entityFactory(entityFactory),
+        _eventManager(eventManager),
         _inputSystem(inputSystem)
     { }
 
@@ -28,7 +34,11 @@ public:
 
     virtual void tick(double t, double dt);
 
+    virtual void receiveMessage(std::shared_ptr<uwlinf::Message> message);
+
 private:
+    void subscribeEvents();
+
     void moveEntity(std::shared_ptr<uwlec::Entity> entity);
 
     void applyGravity(std::shared_ptr<uwlec::Entity> entity);
@@ -37,8 +47,12 @@ private:
 
     void movePC();
 
+    void throwPC();
+
 private:
     std::shared_ptr<uwlman::EntityFactory> _entityFactory;
+
+    std::shared_ptr<uwlman::EventManager> _eventManager;
 
     std::shared_ptr<uwlsys::InputSystem> _inputSystem;
 

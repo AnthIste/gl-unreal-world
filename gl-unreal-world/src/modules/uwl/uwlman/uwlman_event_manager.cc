@@ -1,5 +1,7 @@
 #include "uwlman_event_manager.h"
 
+#include <iostream>
+
 namespace uwlman {
 
 void EventManager::dispatchMessages()
@@ -9,6 +11,10 @@ void EventManager::dispatchMessages()
         auto key = typeid(*message).hash_code();
 
         auto receivers = _messageMap[key];
+
+        std::cout << "Dispatching message: "
+                  << key
+                  << std::endl;
 
         if (receivers.empty()) {
             return;

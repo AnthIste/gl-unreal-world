@@ -7,6 +7,8 @@ namespace uwlevt {
 
 class CommandExit : public uwlinf::Message { };
 
+class CommandThrow : public uwlinf::Message { };
+
 };
 
 #endif
