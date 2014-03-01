@@ -7,6 +7,7 @@ using uwlec::Entity;
 using uwlec::Moveable;
 using uwlman::EntityManager;
 using uwlman::EntityType;
+using uwlsys::KeyMap;
 
 namespace uwlsys {
 
@@ -26,6 +27,26 @@ void GameLogicSystem::tick(double t, double dt)
 
     for (auto entity : allEntities) {
         moveEntity(entity);
+    }
+
+    if (_inputSystem->isKeyDown(KeyMap::MoveForward)) {
+        entityManager()->getComponent<Moveable>(_pc)->dy = 0.0001;
+    }
+    else if (_inputSystem->isKeyDown(KeyMap::MoveBackward)) {
+        entityManager()->getComponent<Moveable>(_pc)->dy = -0.0001;
+    }
+    else {
+        entityManager()->getComponent<Moveable>(_pc)->dy = 0.0;
+    }
+
+    if (_inputSystem->isKeyDown(KeyMap::MoveLeft)) {
+        entityManager()->getComponent<Moveable>(_pc)->dx = -0.0001;
+    }
+    else if (_inputSystem->isKeyDown(KeyMap::MoveRight)) {
+        entityManager()->getComponent<Moveable>(_pc)->dx = 0.0001;
+    }
+    else {
+        entityManager()->getComponent<Moveable>(_pc)->dx = 0.0;
     }
 }
 

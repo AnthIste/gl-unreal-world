@@ -7,6 +7,13 @@
 
 namespace uwlsys {
 
+enum KeyMap {
+    MoveForward = GLFW_KEY_W,
+    MoveBackward = GLFW_KEY_S,
+    MoveLeft = GLFW_KEY_A,
+    MoveRight = GLFW_KEY_D,
+};
+
 class InputSystem : public uwlsys::System,
                     public oglwin::KeyReceiver,
                     public std::enable_shared_from_this<InputSystem> {
@@ -29,7 +36,7 @@ public:
 
     virtual void finalize();
 
-    virtual bool isKeyDown(int key);
+    virtual bool isKeyDown(KeyMap key);
 
     virtual void tick(double t, double dt);
 

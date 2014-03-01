@@ -12,9 +12,10 @@ void InputSystem::initialize()
 
 void InputSystem::finalize()
 {
+    _inputManager->clearKeyReceiver();
 }
 
-bool InputSystem::isKeyDown(int key)
+bool InputSystem::isKeyDown(KeyMap key)
 {
     if (key < 0 || key >= 512) {
         return false;

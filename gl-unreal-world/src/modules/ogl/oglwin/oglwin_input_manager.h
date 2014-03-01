@@ -36,9 +36,6 @@ public:
 
     virtual void clearKeyReceiver();
 
-public:
-    static InputManager* current_instance;
-
 private:
     void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
     static void s_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -47,6 +44,8 @@ private:
     std::shared_ptr<WindowManager> _windowManager;
 
     std::shared_ptr<KeyReceiver> _keyReceiver;
+
+    static InputManager* s_current_instance;
 
 };
 

@@ -3,11 +3,11 @@
 namespace oglwin {
 
 // Used for GLFW static callback routing
-extern InputManager* InputManager::current_instance;
+extern InputManager* InputManager::s_current_instance;
 
 void InputManager::initialize()
 {
-    InputManager::current_instance = this;
+    InputManager::s_current_instance = this;
 
     glfwSetKeyCallback(_windowManager->getGlfwWindow(), InputManager::s_key_callback);
 }
@@ -35,7 +35,7 @@ void InputManager::key_callback(GLFWwindow* window, int key, int scancode, int a
 
 void InputManager::s_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    InputManager::current_instance->key_callback(window, key, scancode, action, mods);
+    InputManager::s_current_instance->key_callback(window, key, scancode, action, mods);
 }
 
 };
