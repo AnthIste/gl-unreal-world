@@ -30,7 +30,7 @@ Game::Game()
     _eventManager = std::make_shared<uwlman::EventManager>(_messageQueue);
 
     // Systems
-    _gameLogicSystem = std::make_shared<uwlsys::GameLogicSystem>(_entityManager);
+    _gameLogicSystem = std::make_shared<uwlsys::GameLogicSystem>(_entityManager, _entityFactory);
     _gfxSystem = std::make_shared<uwlsys::GfxSystem>(_entityManager, _assetManager);
 }
 
@@ -49,8 +49,8 @@ void Game::initialize()
     _gameLogicSystem->initialize();
 
     // Initialize entities
-    _entityFactory->createEntity(EntityType::Wooter, -0.5, 0.0);
     _entityFactory->createEntity(EntityType::Guzzler, 0.5, 0.0);
+    _entityFactory->createEntity(EntityType::Wooter, -0.5, 0.0);
 
     // Subscribe to events
     subscribeEvents();

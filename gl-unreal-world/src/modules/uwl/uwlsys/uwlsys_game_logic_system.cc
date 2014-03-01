@@ -6,6 +6,7 @@
 using uwlec::Entity;
 using uwlec::Moveable;
 using uwlman::EntityManager;
+using uwlman::EntityType;
 
 namespace uwlsys {
 
@@ -20,6 +21,7 @@ void GameLogicSystem::finalize()
 void GameLogicSystem::tick(double t, double dt)
 {
     EntityManager::EntitySet allEntities = _entityManager->allEntities();
+    std::shared_ptr<Entity> toRemove;
 
     for (auto entity : allEntities) {
         auto m = _entityManager->getComponent<Moveable>(entity);
@@ -28,6 +30,12 @@ void GameLogicSystem::tick(double t, double dt)
             auto y = sin(t * m->dy);
             m->y = y;
         }
+
+        toRemove = entity;
+    }
+
+    if (t > 5.0 && allEntities.size() == 2) {
+        _entityFactory->createEntity(EntityType::Wooter, 0.0, 0.0);
     }
 }
 
