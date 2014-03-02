@@ -4,7 +4,7 @@
 #include "uwlec/uwlec_moveable.h"
 #include "uwlevt/commands.h"
 
-#include <cmath>
+#include <thread>
 
 namespace uwl {
 
@@ -15,6 +15,7 @@ const int WindowHeight = 640;
 // Simulation timestep
 const double fps = 60.0;
 const double dt = 1.0 / fps;
+const long FakeRenderTimeMillis = 0;
 
 Game::Game()
 {
@@ -46,8 +47,6 @@ Game::~Game()
 
 void Game::initialize()
 {
-    _clock->setTimeScale(1.1);
-
     // Initialize OpenGL
     _windowManager->createWindow(WindowTitle, WindowWidth, WindowHeight);
     _inputManager->initialize();
@@ -87,19 +86,26 @@ void Game::tick()
     _eventManager->dispatchMessages();
     _entityManager->processChanges();
 
+    // Process input
+    _inputSystem->tick(_timeStep->rt(), _timeStep->rdt());
+
     // Update simulation
     while (_timeStep->hasTime()) {
-        _inputSystem->tick(_timeStep->t(), _timeStep->dt());
         _gameLogicSystem->tick(_timeStep->t(), _timeStep->dt());
-
         _timeStep->consumeTime();
     }
 
     // Optional: use time alpha value interpolation
 
     // Render
-    _gfxSystem->tick(_timeStep->t(), _timeStep->dt());
+    _gfxSystem->tick(_timeStep->rt(), _timeStep->rdt());
     _windowManager->redrawWindow();
+
+    // Simulate slow rendering of frames for FPS and timestep testing
+    if (FakeRenderTimeMillis > 0) {
+        std::chrono::milliseconds extraTime(FakeRenderTimeMillis);
+        std::this_thread::sleep_for(extraTime);
+    }
 }
 
 void Game::receiveMessage(std::shared_ptr<uwlinf::Message> message)

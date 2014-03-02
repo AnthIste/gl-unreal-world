@@ -11,14 +11,14 @@ public:
 
     virtual double tick();
 
-    virtual double getTime();
+    virtual double getTime() const;
 
-    virtual double getAbsoluteTime();
+    virtual double getAbsoluteTime() const;
 
     virtual void setTimeScale(double scale);
 
 private:
-    double scaledTime(double time);
+    double scaledTime(double time) const;
 
 private:
     double _time;

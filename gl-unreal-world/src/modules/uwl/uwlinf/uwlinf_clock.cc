@@ -28,12 +28,12 @@ double Clock::tick()
     return sdt;
 }
 
-double Clock::getTime()
+double Clock::getTime() const
 {
     return _elapsedTime;
 }
 
-double Clock::getAbsoluteTime()
+double Clock::getAbsoluteTime() const
 {
     return _time;
 }
@@ -43,7 +43,7 @@ void Clock::setTimeScale(double scale)
     _scale = scale;
 }
 
-double Clock::scaledTime(double time)
+double Clock::scaledTime(double time) const
 {
     return time * _scale;
 }

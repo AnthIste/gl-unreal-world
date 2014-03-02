@@ -51,6 +51,8 @@ private:
 
     void throwPC();
 
+    void spawnGuzzler();
+
 private:
     std::shared_ptr<uwlman::EntityFactory> _entityFactory;
 

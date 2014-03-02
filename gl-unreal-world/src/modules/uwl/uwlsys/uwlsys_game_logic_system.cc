@@ -48,6 +48,8 @@ void GameLogicSystem::tick(double t, double dt)
         applyGravity(dt, entity);
         detectCollisions(dt, entity);
     }
+
+    movePC();
 }
 
 void GameLogicSystem::receiveMessage(std::shared_ptr<uwlinf::Message> message)
@@ -58,9 +60,7 @@ void GameLogicSystem::receiveMessage(std::shared_ptr<uwlinf::Message> message)
 
     if (message->is<uwlevt::CommandThrow>()) {
         throwPC();
-
-        auto n = (_random() % 1000) / 1000.0;
-        _entityFactory->createEntity(EntityType::Guzzler, n, 0.0);
+        spawnGuzzler();
     }
 }
 
@@ -105,8 +105,6 @@ void GameLogicSystem::detectCollisions(double dt, std::shared_ptr<uwlec::Entity>
             m->dy = -(m->dy) * Bounciness;
         }
         else {
-            LOG4CXX_DEBUG(Logger::getRootLogger(), "uwlsys::GameLogicSystem - "
-                << "Jitter");
             m->dy = 0;
         }
     }
@@ -114,6 +112,10 @@ void GameLogicSystem::detectCollisions(double dt, std::shared_ptr<uwlec::Entity>
 
 void GameLogicSystem::movePC()
 {
+    if (_inputSystem->isKeyDown(KeyMap::Throw)) {
+        auto dy = entityManager()->getComponent<Moveable>(_pc)->dy += 0.0025;
+    }
+    /*
     if (_inputSystem->isKeyDown(KeyMap::MoveForward)) {
         entityManager()->getComponent<Moveable>(_pc)->dy = 0.0001;
     }
@@ -123,21 +125,34 @@ void GameLogicSystem::movePC()
     else {
         entityManager()->getComponent<Moveable>(_pc)->dy = 0.0;
     }
+    */
 
     if (_inputSystem->isKeyDown(KeyMap::MoveLeft)) {
-        entityManager()->getComponent<Moveable>(_pc)->dx = -0.0001;
+        entityManager()->getComponent<Moveable>(_pc)->dx -= 0.001;
     }
     else if (_inputSystem->isKeyDown(KeyMap::MoveRight)) {
-        entityManager()->getComponent<Moveable>(_pc)->dx = 0.0001;
+        entityManager()->getComponent<Moveable>(_pc)->dx += 0.001;
     }
     else {
-        entityManager()->getComponent<Moveable>(_pc)->dx = 0.0;
+        entityManager()->getComponent<Moveable>(_pc)->dx /= 1.1;
     }
 }
 
 void GameLogicSystem::throwPC()
 {
     entityManager()->getComponent<Moveable>(_pc)->dy += ThrowStrength;
+}
+
+void GameLogicSystem::spawnGuzzler()
+{
+    // x in [-1.0, 1.0]
+    auto x = (_random() % 2000) / 1000.0 - 1.0;
+
+    // dy in [0, 0.008]
+    auto dy = (_random() % 8000) / 100000.0;
+
+    auto guzzler = _entityFactory->createEntity(EntityType::Guzzler, x, 0.0);
+    entityManager()->getComponent<Moveable>(guzzler)->dy = dy;
 }
 
 };
