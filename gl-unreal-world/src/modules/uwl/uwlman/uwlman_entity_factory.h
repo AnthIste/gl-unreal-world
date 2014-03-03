@@ -3,6 +3,7 @@
 
 #include "uwlec/uwlec_entity.h"
 #include "uwlman/uwlman_entity_manager.h"
+#include "ogl/ogl_primitives.h"
 
 #include <memory>
 
@@ -28,8 +29,16 @@ private:
 
     std::shared_ptr<uwlec::Entity> createWooter(double x, double y);
 
+    void initializeMeshData();
+
+    std::shared_ptr<ogl::Mesh1P> createMesh(EntityType type);
+
 private:
     std::shared_ptr<uwlman::EntityManager> _entityManager;
+
+    std::shared_ptr<ogl::Mesh1P> _guzzlerMesh;
+
+    std::shared_ptr<ogl::Mesh1P> _wooterMesh;
 
 };
 

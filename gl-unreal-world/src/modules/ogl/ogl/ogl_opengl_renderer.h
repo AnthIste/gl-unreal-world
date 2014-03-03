@@ -8,6 +8,8 @@
 #include <GLFW/glfw3.h>
 #endif
 
+#include "ogl_primitives.h"
+
 #include <string>
 
 namespace ogl {
@@ -34,7 +36,14 @@ public:
 
     void render_triangles(GLuint vbo, int nTriangles);
 
+    void renderMesh1P(const Mesh1P& mesh);
+
+    // TODO: store VBO references internally and pass
+    // UIDs through the public API
     GLuint create_vbo();
+
+    GLuint createVBO_Mesh1P(const Mesh1P& mesh);
+
 };
 
 };

@@ -1,5 +1,7 @@
 #include "ogl_opengl_renderer.h"
 
+#include <vector>
+
 namespace ogl {
 
 OpenGLRenderer::~OpenGLRenderer()
@@ -38,6 +40,46 @@ void OpenGLRenderer::render_triangles(GLuint vbo, int nTriangles)
 
     glDisableVertexAttribArray(0);
     glUseProgram(0);
+}
+
+void OpenGLRenderer::renderMesh1P(const Mesh1P& mesh)
+{
+    GLuint vbo = createVBO_Mesh1P(mesh);
+    auto nVertices = mesh.vertices.size();
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+
+    glDisableVertexAttribArray(0);
+    glUseProgram(0);
+}
+
+// This conversion should be optimized, and the resulting
+// data buffer should be cached!
+GLuint OpenGLRenderer::createVBO_Mesh1P(const Mesh1P& mesh)
+{
+    GLuint bufferObject;
+    std::vector<GLfloat> vertexData;
+    auto nDataSize = mesh.vertices.size() * 4 * sizeof(GLfloat);
+
+    for (auto vert : mesh.vertices) {
+        vertexData.push_back(vert.x);
+        vertexData.push_back(vert.y);
+        vertexData.push_back(vert.z);
+        vertexData.push_back(1.0f);
+    }
+
+    glGenBuffers(1, &bufferObject);
+
+    glBindBuffer(GL_ARRAY_BUFFER, bufferObject);
+    glBufferData(GL_ARRAY_BUFFER, nDataSize, vertexData.data(), GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    return bufferObject;
 }
 
 void OpenGLRenderer::set_shader_program(GLuint program)

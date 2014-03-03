@@ -2,26 +2,18 @@
 #define INC_UWLEC_RENDERABLE_H
 
 #include "uwlec_component.h"
+#include "ogl/ogl_primitives.h"
+
+#include <memory>
 
 namespace uwlec {
-
-enum ModelType {
-    MOD_TRIANGLE,
-    MOD_SQUARE,
-};
 
 /// <summary>
 /// Processed by GfxSystem
 /// </summary>
 struct Renderable : public uwlec::Component {
-    ModelType type;
-    unsigned int color;
-    double scale;
-
-    // TODO: vec3
-    double x;
-    double y;
-    double z;
+    // Can switch to UID
+    std::shared_ptr<ogl::Mesh1P> mesh;
 };
 
 };

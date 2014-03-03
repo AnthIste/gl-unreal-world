@@ -12,7 +12,7 @@ include_directories (${LOG4CXX_INCLUDE_DIR})
 add_definitions ("-std=c++0x")
 
 # configure debugging and profiling
-set (CMAKE_CXX_FLAGS "-O3 -g --no-pretty-templates")
+set (CMAKE_CXX_FLAGS "-g --no-pretty-templates")
 
 # add the OpenGL library
 include_directories ("${PROJECT_SOURCE_DIR}/src/modules/ogl")
